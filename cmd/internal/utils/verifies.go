@@ -6,8 +6,6 @@ import (
 	"regexp"
 )
 
-const baseRegex = `[0-9a-zA-Z-_\.]*`
-
 func IsSecret(target string) bool {
 	secretRegex, err := regexp.Compile(fmt.Sprintf(`^secret\(%s\)$`, baseRegex))
 	if err != nil {
@@ -36,8 +34,4 @@ func IsHardcoded(target string) bool {
 	}
 
 	return hardCodedRegex.Match([]byte(target))
-}
-
-func CheckIsHardCodedSecretOrEnv(target string) bool {
-	return IsHardcoded(target) || IsEnv(target) || IsSecret(target)
 }
