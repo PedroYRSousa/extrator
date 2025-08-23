@@ -43,15 +43,6 @@ func (e *S_Endpoint) Validate() error {
 		*e.LimitExtract = -1
 	}
 
-	if e.QueryParams != nil {
-		for _, queryParam := range *(e.QueryParams) {
-			err = queryParam.validate()
-			if err != nil {
-				return err
-			}
-		}
-	}
-
 	err = e.EndpointConfig.Validate()
 	if err != nil {
 		return err
@@ -209,6 +200,15 @@ func (ec *S_EndpointConfig) Validate() error {
 	if ec.TimeoutInSeconds != nil {
 		ec.TimeoutInSeconds = new(int)
 		*ec.TimeoutInSeconds = -1
+	}
+
+	if ec.QueryParams != nil {
+		for _, queryParam := range *(ec.QueryParams) {
+			err := queryParam.validate()
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil

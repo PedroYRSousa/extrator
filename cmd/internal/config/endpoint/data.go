@@ -35,6 +35,7 @@ type S_EndpointConfig struct {
 	Pagination                *S_Pagination      `yaml:"pagination,omitempty"`
 	Headers                   *map[string]string `yaml:"headers,omitempty"`
 	Body                      *map[string]string `yaml:"body,omitempty"`
+	QueryParams               *[]S_QueryParam    `yaml:"query_params,omitempty"`
 }
 
 type S_Endpoint struct {
@@ -42,6 +43,5 @@ type S_Endpoint struct {
 	Method         string           `yaml:"method"`
 	ResponseFormat string           `yaml:"response_format"`
 	LimitExtract   *int             `yaml:"limit_extract,omitempty"`
-	QueryParams    *[]S_QueryParam  `yaml:"query_params,omitempty"`
 	EndpointConfig S_EndpointConfig `yaml:"endpoint_config"`
 }
