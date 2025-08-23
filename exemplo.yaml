@@ -12,40 +12,41 @@ endpoint:
   uri: "https://example.com/api"
   method: GET
   response_format: JSON
-  headers:
-    Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
-  body: 
-    param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
-    param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
   limit_extract: -1 # -1 (default) | quantidade de ciclos de extração | use -1 para extrair tudo
-  query_params:
-    - name: search
-      value: "example" # value | secret(SECRET_NAME) | env(ENV_VAR)
-  timeout_in_seconds: 30 # -1 (default) | Tempo máximo de espera por uma resposta do endpoint
-  retry:
-    attempts: 3 # Número de tentativas em caso de falha
-    delay_in_seconds: 5 # Tempo de espera entre tentativas
-    backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
-  status_code_waiting:
-    - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
-  status_code_success:
-    - 200 # Códigos de status HTTP que indicam sucesso
-  status_code_skip:
-    - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
-  waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
-  waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
-  pagination:
-    mode: none # none | offset | page | property | link_header
-    sub_mode: accumulative # cumulative | incremental
-    direction: next # next | previous
-    property: $.next # Usado quando mode é 'property'
-    header: next # Usado quando mode é 'link_header'
-    location: header # header | body | query_param
-    offset: $.offset
-    limit: $.limit
-    limit_value: 100
-    page: $.page
-    page_size: 1
+  endpoint_config:
+    query_params:
+      - name: search
+        value: "example" # value | secret(SECRET_NAME) | env(ENV_VAR)
+    headers:
+      Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
+    body: 
+      param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
+      param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
+    timeout_in_seconds: 30 # -1 (default) | Tempo máximo de espera por uma resposta do endpoint
+    retry:
+      attempts: 3 # Número de tentativas em caso de falha
+      delay_in_seconds: 5 # Tempo de espera entre tentativas
+      backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
+    status_code_waiting:
+      - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
+    status_code_success:
+      - 200 # Códigos de status HTTP que indicam sucesso
+    status_code_skip:
+      - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
+    waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
+    waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
+    pagination:
+      mode: none # none | offset | page | property | link_header
+      sub_mode: accumulative # cumulative | incremental
+      direction: next # next | previous
+      property: $.next # Usado quando mode é 'property'
+      header: next # Usado quando mode é 'link_header'
+      location: header # header | body | query_param
+      offset: $.offset
+      limit: $.limit
+      limit_value: 100
+      page: $.page
+      page_size: 1
 
 ############
 #   AUTH   #
@@ -71,50 +72,52 @@ auth_bearer_dynamic:
   prefix: Bearer
   endpoint: "https://example.com/api/token"
   method: POST
-  headers:
-    Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
-  body: 
-    param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
-    param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
   extract: $.access_token
-  timeout_in_seconds: 30 # Tempo máximo de espera por uma resposta do endpoint
-  retry:
-    attempts: 3 # Número de tentativas em caso de falha
-    delay_in_seconds: 5 # Tempo de espera entre tentativas
-    backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
-  status_code_waiting:
-    - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
-  status_code_success:
-    - 200 # Códigos de status HTTP que indicam sucesso
-  status_code_skip:
-    - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
-  waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
-  waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
+  endpoint_config:
+    timeout_in_seconds: 30 # Tempo máximo de espera por uma resposta do endpoint
+    headers:
+      Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
+    body: 
+      param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
+      param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
+    retry:
+      attempts: 3 # Número de tentativas em caso de falha
+      delay_in_seconds: 5 # Tempo de espera entre tentativas
+      backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
+    status_code_waiting:
+      - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
+    status_code_success:
+      - 200 # Códigos de status HTTP que indicam sucesso
+    status_code_skip:
+      - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
+    waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
+    waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
 
 auth_cookie:
   endpoint: "https://example.com/api/token"
   method: POST
-  headers:
-    Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
-  body: 
-    param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
-    param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
   extract:
     - JSESSIONID
     - SESSION_TOKEN
-  timeout_in_seconds: 30 # Tempo máximo de espera por uma resposta do endpoint
-  retry:
-    attempts: 3 # Número de tentativas em caso de falha
-    delay_in_seconds: 5 # Tempo de espera entre tentativas
-    backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
-  status_code_waiting:
-    - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
-  status_code_success:
-    - 200 # Códigos de status HTTP que indicam sucesso
-  status_code_skip:
-    - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
-  waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
-  waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
+  endpoint_config:
+    timeout_in_seconds: 30 # Tempo máximo de espera por uma resposta do endpoint
+    headers:
+      Content-Type: application/json # value | secret(SECRET_NAME) | env(ENV_VAR)
+    body: 
+      param1: value1 # value | secret(SECRET_NAME) | env(ENV_VAR)
+      param2: value2 # value | secret(SECRET_NAME) | env(ENV_VAR)
+    retry:
+      attempts: 3 # Número de tentativas em caso de falha
+      delay_in_seconds: 5 # Tempo de espera entre tentativas
+      backoff_factor: 2 # Fator de aumento do tempo de espera entre tentativas
+    status_code_waiting:
+      - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
+    status_code_success:
+      - 200 # Códigos de status HTTP que indicam sucesso
+    status_code_skip:
+      - 204 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
+    waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
+    waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
 
 ##############
 #   TABLES   #
