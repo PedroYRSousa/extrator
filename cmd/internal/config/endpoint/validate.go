@@ -1,0 +1,215 @@
+package endpoint
+
+import (
+	"errors"
+	"extrator/internal/utils"
+	"fmt"
+	"net/http"
+	"net/url"
+	"strings"
+
+	"golang.org/x/exp/slices"
+)
+
+func (e *S_Endpoint) Validate() error {
+	if strings.TrimSpace(e.URI) == "" {
+		return errors.New("invalid endpoint uri | Check endpoint.uri | value cannot be empty")
+	}
+
+	uri, err := url.Parse(e.URI)
+	if err != nil {
+		return fmt.Errorf("invalid endpoint uri | Check endpoint.uri | error: %v", err)
+	}
+
+	// Não pode ter query params na URI
+	if uri.Query().Encode() != "" {
+		return errors.New("invalid endpoint uri | Check endpoint.uri | query parameters must be defined in endpoint.query_params")
+	}
+
+	// Foco na extração de dados
+	methodsAvailable := []string{http.MethodGet, http.MethodPost}
+	if !slices.Contains(methodsAvailable, strings.ToUpper(e.Method)) {
+		return fmt.Errorf("invalid endpoint method | Check endpoint.method | available options: %v", methodsAvailable)
+	}
+
+	// Por hora somente esses formatos são suportados para extração de dados
+	responsesFormatAvailable := []string{"json"}
+	if !slices.Contains(responsesFormatAvailable, strings.ToLower(e.ResponseFormat)) {
+		return fmt.Errorf("invalid endpoint response format | Check endpoint.response_format | available options: %v", responsesFormatAvailable)
+	}
+
+	if e.LimitExtract != nil {
+		e.LimitExtract = new(int)
+		*e.LimitExtract = -1
+	}
+
+	if e.QueryParams != nil {
+		for _, queryParam := range *(e.QueryParams) {
+			err = queryParam.validate()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	err = e.EndpointConfig.Validate()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (qp *S_QueryParam) validate() error {
+	if strings.TrimSpace(qp.Name) == "" {
+		return errors.New("invalid endpoint query param name | Check endpoint.query_params.name | name cannot be empty")
+	}
+
+	if qp.Value != nil && *qp.Value != "" {
+		if !utils.CheckIsHardCodedSecretOrEnv(*qp.Value) {
+			return errors.New("invalid endpoint body | Check endpoint.body | body parameter values must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+		}
+	}
+
+	return nil
+}
+
+func (r *S_Retry) validate() error {
+	if r.Attempts < 0 {
+		return errors.New("invalid endpoint config retry attempts | Check endpoint.endpoint_config.retry.attempts | value must be greater than or equal to 0")
+	}
+
+	if r.DelayInSeconds < 0 {
+		return errors.New("invalid endpoint config retry delay in seconds | Check endpoint.endpoint_config.retry.delay_in_seconds | value must be greater than or equal to 0")
+	}
+
+	if r.BackoffFactor == nil {
+		r.BackoffFactor = new(int)
+		*r.BackoffFactor = 0
+	} else {
+		if *r.BackoffFactor < 0 {
+			return errors.New("invalid endpoint config retry backoff factor | Check endpoint.endpoint_config.retry.backoff_factor | value must be greater than or equal to 0")
+		}
+	}
+
+	return nil
+}
+
+func (p *S_Pagination) validate() error {
+	if p.Mode == nil {
+		p.Mode = new(string)
+		*p.Mode = "none"
+	}
+
+	availableModes := []string{"none", "offset", "page", "property", "link_header"}
+	if !slices.Contains(availableModes, strings.ToLower(*p.Mode)) {
+		return fmt.Errorf("invalid endpoint config pagination mode | Check endpoint.endpoint_config.pagination.mode | available options: %v", availableModes)
+	}
+
+	if strings.ToLower(*p.Mode) == "none" {
+		return nil
+	}
+
+	if strings.ToLower(*p.Mode) == "offset" {
+		if strings.TrimSpace(p.Offset) == "" {
+			return errors.New("invalid endpoint config pagination offset | Check endpoint.endpoint_config.pagination.offset | value cannot be empty when mode is 'offset'")
+		}
+
+		if strings.TrimSpace(p.Limit) == "" {
+			return errors.New("invalid endpoint config pagination limit | Check endpoint.endpoint_config.pagination.limit | value cannot be empty when mode is 'offset'")
+		}
+
+		if p.LimitValue <= 0 {
+			return errors.New("invalid endpoint config pagination limit value | Check endpoint.endpoint_config.pagination.limit_value | value must be greater than 0 when mode is 'offset'")
+		}
+	}
+
+	if strings.ToLower(*p.Mode) == "page" {
+		if strings.TrimSpace(p.Page) == "" {
+			return errors.New("invalid endpoint config pagination page | Check endpoint.endpoint_config.pagination.page | value cannot be empty when mode is 'page'")
+		}
+		if p.PageSize <= 0 {
+			return errors.New("invalid endpoint config pagination page size | Check endpoint.endpoint_config.pagination.page_size | value must be greater than 0 when mode is 'page'")
+		}
+	}
+
+	if (strings.ToLower(*p.Mode) == "property") && (strings.TrimSpace(p.Property) == "") {
+		return errors.New("invalid endpoint config pagination property | Check endpoint.endpoint_config.pagination.property | value cannot be empty when mode is 'property'")
+	}
+
+	if (strings.ToLower(*p.Mode) == "link_header") && (strings.TrimSpace(p.Header) == "") {
+		return errors.New("invalid endpoint config pagination header | Check endpoint.endpoint_config.pagination.header | value cannot be empty when mode is 'link_header'")
+	}
+
+	availableDirections := []string{"next", "previous"}
+	if !slices.Contains(availableDirections, strings.ToLower(p.Direction)) {
+		return fmt.Errorf("invalid endpoint config pagination direction | Check endpoint.endpoint_config.pagination.direction | available options: %v", availableDirections)
+	}
+
+	availableLocations := []string{"body", "header", "query_param"}
+	if !slices.Contains(availableLocations, strings.ToLower(p.Location)) {
+		return fmt.Errorf("invalid endpoint config pagination location | Check endpoint.endpoint_config.pagination.location | available options: %v", availableLocations)
+	}
+
+	return nil
+}
+
+func (ec *S_EndpointConfig) Validate() error {
+	if ec.WaitingTimeErrorInSeconds < 0 {
+		return errors.New("invalid endpoint config waiting time in error seconds | Check endpoint.endpoint_config.waiting_time_in_error_in_seconds | value must be greater than or equal to 0")
+	}
+
+	if ec.WaitingTimeInSeconds < 0 {
+		return errors.New("invalid endpoint config waiting time in seconds | Check endpoint.endpoint_config.waiting_time_in_seconds | value must be greater than or equal to 0")
+	}
+
+	if ec.Retry != nil {
+		err := ec.Retry.validate()
+		if err != nil {
+			return err
+		}
+	}
+
+	if ec.Pagination != nil {
+		err := ec.Pagination.validate()
+		if err != nil {
+			return err
+		}
+	}
+
+	if ec.Headers != nil {
+		for key, value := range *(ec.Headers) {
+			if strings.TrimSpace(key) == "" {
+				return errors.New("invalid endpoint headers | Check endpoint.headers | header names cannot be empty")
+			}
+
+			if value != "" {
+				if !utils.CheckIsHardCodedSecretOrEnv(value) {
+					return errors.New("invalid endpoint body | Check endpoint.body | body parameter values must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+				}
+			}
+		}
+
+	}
+
+	if ec.Body != nil {
+		for key, value := range *(ec.Body) {
+			if strings.TrimSpace(key) == "" {
+				return errors.New("invalid endpoint body | Check endpoint.body | body parameter names cannot be empty")
+			}
+
+			if value != "" {
+				if !utils.CheckIsHardCodedSecretOrEnv(value) {
+					return errors.New("invalid endpoint body | Check endpoint.body | body parameter values must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+				}
+			}
+		}
+	}
+
+	if ec.TimeoutInSeconds != nil {
+		ec.TimeoutInSeconds = new(int)
+		*ec.TimeoutInSeconds = -1
+	}
+
+	return nil
+}
