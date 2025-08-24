@@ -1,11 +1,12 @@
 package endpoint
 
 import (
-	endpointconfig "extrator/internal/product/endpoint_config"
+	"extrator/internal/product/endpoint_config"
 	"net/http"
 )
 
 type endpointResponseFormat string
+type endpointResponseMethod string
 
 const (
 	ENDPOINT_RESPONSE_FORMAT_JSON endpointResponseFormat = "json"
@@ -15,17 +16,17 @@ const (
 
 var (
 	// Por hora somente esses formatos são suportados para extração de dados
-	responsesFormatAvailable = []endpointResponseFormat{ENDPOINT_RESPONSE_FORMAT_JSON}
+	RESPONSES_FORMAT_AVAILABLE = []endpointResponseFormat{ENDPOINT_RESPONSE_FORMAT_JSON}
 	// Foco na extração de dados
-	methodsAvailable = []string{http.MethodGet, http.MethodPost}
+	METHODS_AVAILABLE = []endpointResponseMethod{http.MethodGet, http.MethodPost}
 )
 
 type S_Endpoint struct {
 	URI            string                 `yaml:"uri"`
-	Method         string                 `yaml:"method"`
+	Method         endpointResponseMethod `yaml:"method"`
 	ResponseFormat endpointResponseFormat `yaml:"response_format"`
 
 	// Opcionais
-	EndpointConfig *endpointconfig.S_EndpointConfig `yaml:"endpoint_config,omitempty"`
-	LimitExtract   *int                             `yaml:"limit_extract,omitempty"`
+	LimitExtract   *int                              `yaml:"limit_extract,omitempty"`
+	EndpointConfig *endpoint_config.S_EndpointConfig `yaml:"endpoint_config,omitempty"`
 }

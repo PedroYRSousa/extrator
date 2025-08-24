@@ -25,12 +25,12 @@ func (e *S_Endpoint) Validate() error {
 		return errors.New("check endpoint.uri | query parameters must be defined in endpoint_config.query_params")
 	}
 
-	if !slices.Contains(methodsAvailable, e.Method) {
-		return fmt.Errorf("check endpoint.method | available options: %v", methodsAvailable)
+	if !slices.Contains(METHODS_AVAILABLE, e.Method) {
+		return fmt.Errorf("check endpoint.method | available options: %v", METHODS_AVAILABLE)
 	}
 
-	if !slices.Contains(responsesFormatAvailable, e.ResponseFormat) {
-		return fmt.Errorf("check endpoint.response_format | available options: %v", responsesFormatAvailable)
+	if !slices.Contains(RESPONSES_FORMAT_AVAILABLE, e.ResponseFormat) {
+		return fmt.Errorf("check endpoint.response_format | available options: %v", RESPONSES_FORMAT_AVAILABLE)
 	}
 
 	err = e.EndpointConfig.Validate()
