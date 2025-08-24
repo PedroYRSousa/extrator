@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"slices"
-	"strings"
 )
 
 func (t *S_Table) Validate() error {
@@ -17,7 +16,7 @@ func (t *S_Table) Validate() error {
 	}
 
 	columnsModesAvailable := []string{"auto", "defined"}
-	if !slices.Contains(columnsModesAvailable, strings.ToLower(t.ColumnsMode)) {
+	if !slices.Contains(columnsModesAvailable, t.ColumnsMode) {
 		return fmt.Errorf("invalid table columns mode | Check tables.columns_mode | available options: %v", columnsModesAvailable)
 	}
 
