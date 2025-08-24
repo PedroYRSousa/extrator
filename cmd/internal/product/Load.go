@@ -1,46 +1,13 @@
 package product
 
 import (
-	"errors"
-	"extrator/internal/utils"
+	"log"
 	"os"
 	"strings"
+	"time"
 
 	"gopkg.in/yaml.v3"
 )
-
-func (c *S_ProductEndpoint) validate() error {
-	if (c.Name == "") || (strings.TrimSpace(c.Name) == "") {
-		return errors.New("invalid config name | Check name | name cannot be empty")
-	}
-
-	if (c.Version == "") || (strings.TrimSpace(c.Version) == "") {
-		return errors.New("invalid config version | Check version | version cannot be empty")
-	}
-
-	if (c.Description == "") || (strings.TrimSpace(c.Description) == "") {
-		return errors.New("invalid config description | Check description | description cannot be empty")
-	}
-
-	err := c.Endpoint.Validate()
-	if err != nil {
-		return err
-	}
-
-	err = c.Auth.Validate()
-	if err != nil {
-		return err
-	}
-
-	for _, table := range c.Tables {
-		err := table.Validate()
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
 
 func readEndpoints(product s_ProductConfigFile) (s_ProductConfigFile, error) {
 	endpointDirs, err := os.ReadDir(product.Path)
@@ -108,7 +75,6 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 				return nil, err
 			}
 
-			product.Path = utils.JoinPaths(utils.GetDataPaths(), product.Name)
 			products[product.Name] = append(products[product.Name], product)
 		}
 	}
@@ -119,11 +85,7 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 func formatAndValidateConfig(configs map[string][]S_ProductEndpoint) error {
 	for _, productConfigs := range configs {
 		for _, config := range productConfigs {
-			config.Endpoint.Format()
-			config.Auth.Format()
-			for index := range config.Tables {
-				config.Tables[index].Format()
-			}
+			config.format()
 			err := config.validate()
 			if err != nil {
 				return err
@@ -135,6 +97,9 @@ func formatAndValidateConfig(configs map[string][]S_ProductEndpoint) error {
 }
 
 func Load() (map[string][]S_ProductEndpoint, error) {
+	startTime := time.Now()
+	log.Println("Start loading configuration")
+
 	s_ConfigFile, err := loadConfigFile()
 	if err != nil {
 		return nil, err
@@ -149,6 +114,8 @@ func Load() (map[string][]S_ProductEndpoint, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	log.Println("End loading configuration", time.Since(startTime))
 
 	return config, nil
 }

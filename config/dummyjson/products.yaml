@@ -9,46 +9,119 @@ description: Extraindo dados de teste de dummyjson.com
 #   ENDPOINT   #
 ################
 endpoint:
-  uri: "https://dummyjson.com/products"
-  method: GET
-  response_format: JSON
-  # headers:
-    # Content-Type: application/json
-  # body: 
-    # param1: value1
-    # param2: value2
-  limit_extract: 1
-  endpoint_config:
-    timeout_in_seconds: 30
-    query_params:
-      - name: limit
-        value: 10
-      - name: skip 
-        value: 0
-    retry:
-      attempts: 10 # Número de tentativas em caso de falha
-      delay_in_seconds: 30 # Tempo de espera entre tentativas
-    status_code_waiting:
-      - 429 # Códigos de status HTTP que indicam que o cliente deve esperar antes de tentar novamente
-    status_code_success:
-      - 200 # Códigos de status HTTP que indicam sucesso
-    status_code_skip:
-      - 400 # Códigos de status HTTP que indicam que a resposta deve ser ignorada
-    waiting_time_in_seconds: 60 # Tempo de espera em segundos quando um código de status de espera é recebido
-    waiting_time_in_error_in_seconds: 30 # Tempo de espera em segundos quando um erro é recebido
-    pagination:
-      mode: offset
-      location: query_param
-      direction: next
-      offset: $.skip
-      limit: $.limit
-      limit_value: 10
+  uri: "https://dummyjson.com/products" # Obrigatório
+  method: GET # Obrigatório
+  response_format: JSON # Obrigatório
+  limit_extract: 1 # Opcional
+  endpoint_config: # Obrigatório
+    status_code_waiting: # Obrigatório
+      - 429
+    status_code_success: # Obrigatório
+      - 200
+    status_code_skip: # Obrigatório
+      - 400
+    waiting_time_in_seconds: 60 # Obrigatório
+    waiting_time_in_error_in_seconds: 30 # Obrigatório
+    timeout_in_seconds: 30 # Opcional
+    retry: # Opcional
+      attempts: 10
+      delay_in_seconds: 30
+
+    headers: # Opcional
+      Content-Type: application/json
+    body: # Opcional
+      param1: value1
+      param2: value2
+    query_params: # Opcional
+      limit: 10
+      skip: 0
+
+##################
+#   PAGINATION   #
+##################
+pagination:
+  mode: offset # Obrigatório
+  offset: # Obrigatório se mode for offset
+    direction: next
+    location: query_param
+    offset: $.skip
+    limit: $.limit
+  page: # Obrigatório se mode for page
+    direction: next
+    location: query_param
+    page: $.page
+    page_size: 1
+  property: # Obrigatório se mode for property
+    property: $.next
+  link_header: # Obrigatório se mode for link_header
+    header: next
 
 ############
 #   AUTH   #
 ############
 auth:
-  auth_mode: none
+  mode: asd  # Obrigatório
+  basic: # Obrigatório se mode for basic
+    username: user
+    password: pass
+  bearer: # Obrigatório se mode for bearer
+    name: Authorization
+    prefix: Bearer
+    token: token_value
+  api_key: # Obrigatório se mode for api_key
+    name: api_key
+    location: header
+    value: api_key_value
+  bearer_dynamic: # Obrigatório se mode for bearer_dynamic
+    name: Authorization
+    prefix: Bearer
+    endpoint: "https://example.com/api/token"
+    method: POST
+    extract: $.access_token
+    endpoint_config:
+      timeout_in_seconds: 30
+      headers:
+        Content-Type: application/json
+      body: 
+        param1: value1
+        param2: value2
+      retry:
+        attempts: 3
+        delay_in_seconds: 5
+        backoff_factor: 2
+      status_code_waiting:
+        - 429
+      status_code_success:
+        - 200
+      status_code_skip:
+        - 204
+      waiting_time_in_seconds: 60
+      waiting_time_in_error_in_seconds: 30
+  cookie: # Obrigatório se mode for cookie
+    endpoint: "https://example.com/api/token"
+    method: POST
+    extract:
+      - JSESSIONID
+      - SESSION_TOKEN
+    endpoint_config:
+      timeout_in_seconds: 30
+      headers:
+        Content-Type: application/json
+      body: 
+        param1: value1
+        param2: value2
+      retry:
+        attempts: 3
+        delay_in_seconds: 5
+        backoff_factor: 2
+      status_code_waiting:
+        - 429
+      status_code_success:
+        - 200
+      status_code_skip:
+        - 204
+      waiting_time_in_seconds: 60
+      waiting_time_in_error_in_seconds: 30
 
 ##############
 #   TABLES   #

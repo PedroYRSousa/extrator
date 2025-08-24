@@ -2,31 +2,31 @@ package auth
 
 import "extrator/internal/product/endpoint"
 
-type S_AuthBasic struct {
+type S_Basic struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 }
 
-type S_AuthBearer struct {
+type S_Bearer struct {
 	Name   string `yaml:"name"`
 	Prefix string `yaml:"prefix"`
 	Token  string `yaml:"token"`
 }
 
-type S_AuthApiKey struct {
+type S_ApiKey struct {
 	Name     string `yaml:"name"`
 	Location string `yaml:"location"`
 	Value    string `yaml:"value"`
 }
 
-type S_AuthCookie struct {
+type S_Cookie struct {
 	Endpoint       string                    `yaml:"endpoint"`
 	Method         string                    `yaml:"method"`
 	Extract        []string                  `yaml:"extract"`
 	EndpointConfig endpoint.S_EndpointConfig `yaml:"endpoint_config"`
 }
 
-type S_AuthBearerDynamic struct {
+type S_BearerDynamic struct {
 	Name           string                    `yaml:"name"`
 	Prefix         string                    `yaml:"prefix"`
 	Endpoint       string                    `yaml:"endpoint"`
@@ -36,10 +36,10 @@ type S_AuthBearerDynamic struct {
 }
 
 type S_Auth struct {
-	AuthMode          string               `yaml:"auth_mode"`
-	AuthBasic         *S_AuthBasic         `yaml:"auth_basic,omitempty"`
-	AuthBearer        *S_AuthBearer        `yaml:"auth_bearer,omitempty"`
-	AuthApiKey        *S_AuthApiKey        `yaml:"auth_api_key,omitempty"`
-	AuthBearerDynamic *S_AuthBearerDynamic `yaml:"auth_bearer_dynamic,omitempty"`
-	AuthCookie        *S_AuthCookie        `yaml:"auth_cookie,omitempty"`
+	Mode          string           `yaml:"mode"`
+	Basic         *S_Basic         `yaml:"basic,omitempty"`
+	Bearer        *S_Bearer        `yaml:"bearer,omitempty"`
+	ApiKey        *S_ApiKey        `yaml:"api_key,omitempty"`
+	BearerDynamic *S_BearerDynamic `yaml:"bearer_dynamic,omitempty"`
+	Cookie        *S_Cookie        `yaml:"cookie,omitempty"`
 }

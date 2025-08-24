@@ -33,7 +33,6 @@ func (e *S_Endpoint) Validate() error {
 	}
 
 	// Por hora somente esses formatos são suportados para extração de dados
-	responsesFormatAvailable := []string{"json"}
 	if !slices.Contains(responsesFormatAvailable, e.ResponseFormat) {
 		return fmt.Errorf("invalid endpoint response format | Check endpoint.response_format | available options: %v", responsesFormatAvailable)
 	}
@@ -41,20 +40,6 @@ func (e *S_Endpoint) Validate() error {
 	err = e.EndpointConfig.Validate()
 	if err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (qp *S_QueryParam) validate() error {
-	if qp.Name == "" {
-		return errors.New("invalid endpoint query param name | Check endpoint.query_params.name | name cannot be empty")
-	}
-
-	if qp.Value != nil && *qp.Value != "" {
-		if !utils.CheckIsHardCodedSecretOrEnv(*qp.Value) {
-			return errors.New("invalid endpoint body | Check endpoint.body | body parameter values must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
-		}
 	}
 
 	return nil
@@ -76,60 +61,6 @@ func (r *S_Retry) validate() error {
 	return nil
 }
 
-func (p *S_Pagination) validate() error {
-	availableModes := []string{"none", "offset", "page", "property", "link_header"}
-	if !slices.Contains(availableModes, *p.Mode) {
-		return fmt.Errorf("invalid endpoint config pagination mode | Check endpoint.endpoint_config.pagination.mode | available options: %v", availableModes)
-	}
-
-	if *p.Mode == "none" {
-		return nil
-	}
-
-	if *p.Mode == "offset" {
-		if p.Offset == "" {
-			return errors.New("invalid endpoint config pagination offset | Check endpoint.endpoint_config.pagination.offset | value cannot be empty when mode is 'offset'")
-		}
-
-		if p.Limit == "" {
-			return errors.New("invalid endpoint config pagination limit | Check endpoint.endpoint_config.pagination.limit | value cannot be empty when mode is 'offset'")
-		}
-
-		if p.LimitValue <= 0 {
-			return errors.New("invalid endpoint config pagination limit value | Check endpoint.endpoint_config.pagination.limit_value | value must be greater than 0 when mode is 'offset'")
-		}
-	}
-
-	if *p.Mode == "page" {
-		if p.Page == "" {
-			return errors.New("invalid endpoint config pagination page | Check endpoint.endpoint_config.pagination.page | value cannot be empty when mode is 'page'")
-		}
-		if p.PageSize <= 0 {
-			return errors.New("invalid endpoint config pagination page size | Check endpoint.endpoint_config.pagination.page_size | value must be greater than 0 when mode is 'page'")
-		}
-	}
-
-	if (*p.Mode == "property") && (p.Property == "") {
-		return errors.New("invalid endpoint config pagination property | Check endpoint.endpoint_config.pagination.property | value cannot be empty when mode is 'property'")
-	}
-
-	if (*p.Mode == "link_header") && (p.Header == "") {
-		return errors.New("invalid endpoint config pagination header | Check endpoint.endpoint_config.pagination.header | value cannot be empty when mode is 'link_header'")
-	}
-
-	availableDirections := []string{"next", "previous"}
-	if !slices.Contains(availableDirections, p.Direction) {
-		return fmt.Errorf("invalid endpoint config pagination direction | Check endpoint.endpoint_config.pagination.direction | available options: %v", availableDirections)
-	}
-
-	availableLocations := []string{"body", "header", "query_param"}
-	if !slices.Contains(availableLocations, p.Location) {
-		return fmt.Errorf("invalid endpoint config pagination location | Check endpoint.endpoint_config.pagination.location | available options: %v", availableLocations)
-	}
-
-	return nil
-}
-
 func (ec *S_EndpointConfig) Validate() error {
 	if ec.WaitingTimeErrorInSeconds < 0 {
 		return errors.New("invalid endpoint config waiting time in error seconds | Check endpoint.endpoint_config.waiting_time_in_error_in_seconds | value must be greater than or equal to 0")
@@ -141,13 +72,6 @@ func (ec *S_EndpointConfig) Validate() error {
 
 	if ec.Retry != nil {
 		err := ec.Retry.validate()
-		if err != nil {
-			return err
-		}
-	}
-
-	if ec.Pagination != nil {
-		err := ec.Pagination.validate()
 		if err != nil {
 			return err
 		}
@@ -187,14 +111,14 @@ func (ec *S_EndpointConfig) Validate() error {
 		*ec.TimeoutInSeconds = -1
 	}
 
-	if ec.QueryParams != nil {
-		for _, queryParam := range *(ec.QueryParams) {
-			err := queryParam.validate()
-			if err != nil {
-				return err
-			}
-		}
-	}
+	// if ec.QueryParams != nil {
+	// 	for _, queryParam := range *(ec.QueryParams) {
+	// 		err := queryParam.validate()
+	// 		if err != nil {
+	// 			return err
+	// 		}
+	// 	}
+	// }
 
 	return nil
 }

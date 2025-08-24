@@ -10,42 +10,42 @@ import (
 
 func (a *S_Auth) Validate() error {
 	modesAvailable := []string{"none", "basic", "bearer", "bearer_dynamic", "cookie", "api_key"}
-	if !slices.Contains(modesAvailable, a.AuthMode) {
+	if !slices.Contains(modesAvailable, a.Mode) {
 		return fmt.Errorf("invalid auth mode | Check auth.auth_mode | available options: %v", modesAvailable)
 	}
 
-	switch a.AuthMode {
+	switch a.Mode {
 	case "basic":
-		if a.AuthBasic == nil {
+		if a.Basic == nil {
 			return errors.New("invalid auth basic | Check auth.auth_basic | auth_basic cannot be null when auth_mode is 'basic'")
 		}
-		return a.AuthBasic.validate()
+		return a.Basic.validate()
 	case "bearer":
-		if a.AuthBearer == nil {
+		if a.Bearer == nil {
 			return errors.New("invalid auth bearer | Check auth.auth_bearer | auth_bearer cannot be null when auth_mode is 'bearer'")
 		}
-		return a.AuthBearer.validate()
+		return a.Bearer.validate()
 	case "api_key":
-		if a.AuthApiKey == nil {
+		if a.ApiKey == nil {
 			return errors.New("invalid auth api key | Check auth.auth_api_key | auth_api_key cannot be null when auth_mode is 'api_key'")
 		}
-		return a.AuthApiKey.validate()
+		return a.ApiKey.validate()
 	case "bearer_dynamic":
-		if a.AuthBearerDynamic == nil {
+		if a.BearerDynamic == nil {
 			return errors.New("invalid auth bearer dynamic | Check auth.auth_bearer_dynamic | auth_bearer_dynamic cannot be null when auth_mode is 'bearer dynamic'")
 		}
-		return a.AuthBearerDynamic.validate()
+		return a.BearerDynamic.validate()
 	case "cookie":
-		if a.AuthCookie == nil {
+		if a.Cookie == nil {
 			return errors.New("invalid auth cookie | Check auth.auth_cookie | auth_cookie cannot be null when auth_mode is 'cookie'")
 		}
-		return a.AuthCookie.validate()
+		return a.Cookie.validate()
 	}
 
 	return nil
 }
 
-func (ab *S_AuthBasic) validate() error {
+func (ab *S_Basic) validate() error {
 	if ab.Username == "" {
 		return errors.New("invalid auth basic username | Check auth.auth_basic.username | value cannot be empty")
 	}
@@ -65,7 +65,7 @@ func (ab *S_AuthBasic) validate() error {
 	return nil
 }
 
-func (ab *S_AuthBearer) validate() error {
+func (ab *S_Bearer) validate() error {
 	if ab.Name == "" {
 		ab.Name = "Authorization"
 	}
@@ -85,7 +85,7 @@ func (ab *S_AuthBearer) validate() error {
 	return nil
 }
 
-func (apk *S_AuthApiKey) validate() error {
+func (apk *S_ApiKey) validate() error {
 	if apk.Name == "" {
 		return errors.New("invalid auth api key name | Check auth.auth_api_key.name | value cannot be empty")
 	}
@@ -106,7 +106,7 @@ func (apk *S_AuthApiKey) validate() error {
 	return nil
 }
 
-func (abd *S_AuthBearerDynamic) validate() error {
+func (abd *S_BearerDynamic) validate() error {
 	if abd.Name == "" {
 		abd.Name = "Authorization"
 	}
@@ -136,7 +136,7 @@ func (abd *S_AuthBearerDynamic) validate() error {
 	return nil
 }
 
-func (ab *S_AuthCookie) validate() error {
+func (ab *S_Cookie) validate() error {
 	if ab.Endpoint == "" {
 		return errors.New("invalid auth cookie endpoint | Check auth.auth_cookie.endpoint | value cannot be empty")
 	}
