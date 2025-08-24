@@ -1,4 +1,4 @@
-package endpointconfig
+package endpoint_config
 
 func newRetry() *S_Retry {
 	attempts := ENDPOINT_RETRY_ATTEMPTS_DEFAULT

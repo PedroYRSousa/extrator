@@ -1,4 +1,4 @@
-package endpointconfig
+package endpoint_config
 
 func (r *S_Retry) format() {
 	if r == nil {
@@ -8,12 +8,12 @@ func (r *S_Retry) format() {
 	}
 
 	if r.Attempts == nil {
-		r.Attempts = new(int)
+		r.Attempts = new(uint)
 		*r.Attempts = ENDPOINT_RETRY_ATTEMPTS_DEFAULT
 	}
 
 	if r.DelayInSeconds == nil {
-		r.DelayInSeconds = new(int)
+		r.DelayInSeconds = new(uint)
 		*r.DelayInSeconds = ENDPOINT_RETRY_DELAY_IN_SECONDS_DEFAULT
 	}
 }
@@ -26,32 +26,32 @@ func (ec *S_EndpointConfig) format() {
 	}
 
 	if ec.StatusCodeWaiting == nil {
-		ec.StatusCodeWaiting = new([]int)
+		ec.StatusCodeWaiting = new([]uint)
 		*ec.StatusCodeWaiting = ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_WAITING_DEFAULT
 	}
 
 	if ec.StatusCodeSuccess == nil {
-		ec.StatusCodeSuccess = new([]int)
+		ec.StatusCodeSuccess = new([]uint)
 		*ec.StatusCodeSuccess = ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_SUCCESS_DEFAULT
 	}
 
 	if ec.StatusCodeSkip == nil {
-		ec.StatusCodeSkip = new([]int)
+		ec.StatusCodeSkip = new([]uint)
 		*ec.StatusCodeSkip = ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_SKIPPING_DEFAULT
 	}
 
 	if ec.WaitingTimeInSeconds == nil {
-		ec.WaitingTimeInSeconds = new(int)
+		ec.WaitingTimeInSeconds = new(uint)
 		*ec.WaitingTimeInSeconds = ENDPOINT_ENDPOINT_CONFIG_WAITING_TIME_IN_SECONDS_DEFAULT
 	}
 
 	if ec.WaitingTimeErrorInSeconds == nil {
-		ec.WaitingTimeErrorInSeconds = new(int)
+		ec.WaitingTimeErrorInSeconds = new(uint)
 		*ec.WaitingTimeErrorInSeconds = ENDPOINT_ENDPOINT_CONFIG_WAITING_TIME_ERROR_IN_SECONDS_DEFAULT
 	}
 
 	if ec.TimeoutInSeconds == nil {
-		ec.TimeoutInSeconds = new(int)
+		ec.TimeoutInSeconds = new(uint)
 		*ec.TimeoutInSeconds = ENDPOINT_ENDPOINT_CONFIG_TIMEOUT_IN_SECONDS_DEFAULT
 	}
 
