@@ -2,7 +2,7 @@ package pagination
 
 import "strings"
 
-func (po *S_PaginationOffset) Format() {
+func (po *S_PaginationOffset) format() {
 	if po != nil {
 		po.Direction = paginationDirection(strings.TrimSpace(strings.ToLower(string(po.Direction))))
 		po.Location = paginationLocation(strings.TrimSpace(strings.ToLower(string(po.Location))))
@@ -11,7 +11,7 @@ func (po *S_PaginationOffset) Format() {
 	}
 }
 
-func (pp *S_PaginationPage) Format() {
+func (pp *S_PaginationPage) format() {
 	if pp != nil {
 		pp.Direction = paginationDirection(strings.TrimSpace(strings.ToLower(string(pp.Direction))))
 		pp.Location = paginationLocation(strings.TrimSpace(strings.ToLower(string(pp.Location))))
@@ -22,19 +22,19 @@ func (pp *S_PaginationPage) Format() {
 	}
 }
 
-func (pp *S_PaginationProperty) Format() {
+func (pp *S_PaginationProperty) format() {
 	if pp != nil {
 		pp.Property = strings.TrimSpace(pp.Property)
 	}
 }
 
-func (plh *S_PaginationLinkHeader) Format() {
+func (plh *S_PaginationLinkHeader) format() {
 	if plh != nil {
 		plh.Header = strings.TrimSpace(plh.Header)
 	}
 }
 
-func (p *S_Pagination) Format() {
+func (p *S_Pagination) format() {
 	p.Mode = paginationMode(strings.TrimSpace(strings.ToLower(string(p.Mode))))
 
 	p.Offset.Format()

@@ -1,6 +1,9 @@
 package endpoint
 
-import endpointconfig "extrator/internal/product/endpoint_config"
+import (
+	endpointconfig "extrator/internal/product/endpoint_config"
+	"net/http"
+)
 
 type endpointResponseFormat string
 
@@ -11,7 +14,10 @@ const (
 )
 
 var (
+	// Por hora somente esses formatos são suportados para extração de dados
 	responsesFormatAvailable = []endpointResponseFormat{ENDPOINT_RESPONSE_FORMAT_JSON}
+	// Foco na extração de dados
+	methodsAvailable = []string{http.MethodGet, http.MethodPost}
 )
 
 type S_Endpoint struct {

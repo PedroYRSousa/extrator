@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func (t *S_Table) Format() {
+func (t *S_Table) format() {
 	t.ColumnsMode = strings.ToLower(t.ColumnsMode)
 	for index := range t.Columns {
 		t.Columns[index].format()
