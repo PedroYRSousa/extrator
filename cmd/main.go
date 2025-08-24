@@ -17,7 +17,7 @@ func main() {
 
 	products, err := product.Load()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("ERROR", err)
 	}
 
 	for k, v := range products {

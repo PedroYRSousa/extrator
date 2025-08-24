@@ -1,6 +1,8 @@
 package auth
 
-import "extrator/internal/product/endpoint"
+import (
+	endpointconfig "extrator/internal/product/endpoint_config"
+)
 
 type S_Basic struct {
 	Username string `yaml:"username"`
@@ -20,19 +22,19 @@ type S_ApiKey struct {
 }
 
 type S_Cookie struct {
-	Endpoint       string                    `yaml:"endpoint"`
-	Method         string                    `yaml:"method"`
-	Extract        []string                  `yaml:"extract"`
-	EndpointConfig endpoint.S_EndpointConfig `yaml:"endpoint_config"`
+	Endpoint       string                          `yaml:"endpoint"`
+	Method         string                          `yaml:"method"`
+	Extract        []string                        `yaml:"extract"`
+	EndpointConfig endpointconfig.S_EndpointConfig `yaml:"endpoint_config"`
 }
 
 type S_BearerDynamic struct {
-	Name           string                    `yaml:"name"`
-	Prefix         string                    `yaml:"prefix"`
-	Endpoint       string                    `yaml:"endpoint"`
-	Method         string                    `yaml:"method"`
-	Extract        string                    `yaml:"extract"`
-	EndpointConfig endpoint.S_EndpointConfig `yaml:"endpoint_config"`
+	Name           string                          `yaml:"name"`
+	Prefix         string                          `yaml:"prefix"`
+	Endpoint       string                          `yaml:"endpoint"`
+	Method         string                          `yaml:"method"`
+	Extract        string                          `yaml:"extract"`
+	EndpointConfig endpointconfig.S_EndpointConfig `yaml:"endpoint_config"`
 }
 
 type S_Auth struct {

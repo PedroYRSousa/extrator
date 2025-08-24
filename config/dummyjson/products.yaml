@@ -13,25 +13,26 @@ endpoint:
   method: GET # Obrigatório
   response_format: JSON # Obrigatório
   limit_extract: 1 # Opcional
-  endpoint_config: # Obrigatório
-    status_code_waiting: # Obrigatório
+  endpoint_config: # Opcional
+    status_code_waiting:
       - 429
-    status_code_success: # Obrigatório
+    status_code_success:
       - 200
-    status_code_skip: # Obrigatório
+    status_code_skip:
       - 400
-    waiting_time_in_seconds: 60 # Obrigatório
-    waiting_time_in_error_in_seconds: 30 # Obrigatório
-    timeout_in_seconds: 30 # Opcional
-    retry: # Opcional
+    waiting_time_in_seconds: 60
+    waiting_time_error_in_seconds: 30 
+    timeout_in_seconds: 30
+    retry:
       attempts: 10
       delay_in_seconds: 30
-    headers: # Opcional
+      backoff_factor: 1
+    headers: 
       Content-Type: application/json
-    body: # Opcional
+    body:
       param1: value1
       param2: value2
-    query_params: # Opcional
+    query_params:
       limit: 10
       skip: 0
 

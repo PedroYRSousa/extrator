@@ -2,19 +2,18 @@ package product
 
 import (
 	"errors"
-	"strings"
 )
 
 func (c *S_ProductEndpoint) validate() error {
-	if (c.Name == "") || (strings.TrimSpace(c.Name) == "") {
+	if c.Name == "" {
 		return errors.New("invalid config | Check name | name cannot be empty")
 	}
 
-	if (c.Version == "") || (strings.TrimSpace(c.Version) == "") {
+	if c.Version == "" {
 		return errors.New("invalid config | Check version | version cannot be empty")
 	}
 
-	if (c.Description == "") || (strings.TrimSpace(c.Description) == "") {
+	if c.Description == "" {
 		return errors.New("invalid config | Check description | description cannot be empty")
 	}
 
