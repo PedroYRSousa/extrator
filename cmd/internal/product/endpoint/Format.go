@@ -6,7 +6,7 @@ import (
 
 func (e *S_Endpoint) format() {
 	if e == nil {
-		panic("TODO, Dizer aqui que endpoint é obrigatório")
+		panic("Endpoint is required")
 	}
 
 	e.URI = strings.TrimSpace(strings.ToLower(e.URI))

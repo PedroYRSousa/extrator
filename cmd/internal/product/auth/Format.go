@@ -6,7 +6,7 @@ import (
 
 func (ab *S_Basic) format() {
 	if ab == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("Basic is required")
 	}
 
 	ab.Username = strings.TrimSpace(ab.Username)
@@ -15,7 +15,7 @@ func (ab *S_Basic) format() {
 
 func (dd *S_DynamicDetails) format() {
 	if dd == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("DynamicDetails is required")
 	}
 
 	dd.Endpoint = strings.TrimSpace(dd.Endpoint)
@@ -24,7 +24,7 @@ func (dd *S_DynamicDetails) format() {
 
 func (ab *S_Bearer) format() {
 	if ab == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("Bearer is required")
 	}
 
 	ab.Token = strings.TrimSpace(ab.Token)
@@ -51,7 +51,7 @@ func (ab *S_Bearer) format() {
 
 func (apk *S_ApiKey) format() {
 	if apk == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("ApiKey is required")
 	}
 
 	apk.Name = strings.TrimSpace(apk.Name)
@@ -67,7 +67,7 @@ func (apk *S_ApiKey) format() {
 
 func (ab *S_Cookie) format() {
 	if ab == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("Cookie is required")
 	}
 	ab.Endpoint = strings.TrimSpace(ab.Endpoint)
 	for index := range ab.Extract {
@@ -77,7 +77,7 @@ func (ab *S_Cookie) format() {
 
 func (a *S_Auth) format() {
 	if a == nil {
-		panic("TODO, Dizer aqui que é obrigatório")
+		panic("Auth is required")
 	}
 
 	a.Mode = authMode(strings.ToLower(string(a.Mode)))
