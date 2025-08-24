@@ -69,13 +69,13 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 				return nil, err
 			}
 
-			var product S_ProductEndpoint
-			err = yaml.Unmarshal(data, &product)
+			var productEndpoint S_ProductEndpoint
+			err = yaml.Unmarshal(data, &productEndpoint)
 			if err != nil {
 				return nil, err
 			}
 
-			products[product.Name] = append(products[product.Name], product)
+			products[product.Name] = append(products[product.Name], productEndpoint)
 		}
 	}
 

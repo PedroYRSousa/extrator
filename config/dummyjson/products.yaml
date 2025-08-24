@@ -26,7 +26,6 @@ endpoint:
     retry: # Opcional
       attempts: 10
       delay_in_seconds: 30
-
     headers: # Opcional
       Content-Type: application/json
     body: # Opcional
@@ -60,7 +59,7 @@ pagination:
 #   AUTH   #
 ############
 auth:
-  mode: asd  # Obrigatório
+  mode: none  # Obrigatório
   basic: # Obrigatório se mode for basic
     username: user
     password: pass
