@@ -7,149 +7,143 @@ import (
 	"slices"
 )
 
-func (a *S_Auth) Validate() error {
-	a.format()
+func (ab *S_Basic) validate() error {
+	ab.format()
 
-	if !slices.Contains(MODES_AVAILABLE, a.Mode) {
-		return fmt.Errorf("invalid auth mode | Check auth.auth_mode | available options: %v", MODES_AVAILABLE)
+	if ab.Username == "" {
+		return errors.New("check auth.basic.username | value cannot be empty")
 	}
 
-	switch a.Mode {
-	case "basic":
-		if a.Basic == nil {
-			return errors.New("invalid auth basic | Check auth.auth_basic | auth_basic cannot be null when auth_mode is 'basic'")
-		}
-		return a.Basic.validate()
-	case "bearer":
-		if a.Bearer == nil {
-			return errors.New("invalid auth bearer | Check auth.auth_bearer | auth_bearer cannot be null when auth_mode is 'bearer'")
-		}
-		return a.Bearer.validate()
-	case "api_key":
-		if a.ApiKey == nil {
-			return errors.New("invalid auth api key | Check auth.auth_api_key | auth_api_key cannot be null when auth_mode is 'api_key'")
-		}
-		return a.ApiKey.validate()
-	case "bearer_dynamic":
-		if a.BearerDynamic == nil {
-			return errors.New("invalid auth bearer dynamic | Check auth.auth_bearer_dynamic | auth_bearer_dynamic cannot be null when auth_mode is 'bearer dynamic'")
-		}
-		return a.BearerDynamic.validate()
-	case "cookie":
-		if a.Cookie == nil {
-			return errors.New("invalid auth cookie | Check auth.auth_cookie | auth_cookie cannot be null when auth_mode is 'cookie'")
-		}
-		return a.Cookie.validate()
+	if !utils.CheckIsHardCodedSecretOrEnv(ab.Username) {
+		return errors.New("check auth.basic.username | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+	}
+
+	if ab.Password == "" {
+		return errors.New("check auth.basic.password | value cannot be empty")
+	}
+
+	if !utils.CheckIsHardCodedSecretOrEnv(ab.Password) {
+		return errors.New("check auth.basic.password | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
 	}
 
 	return nil
 }
 
-func (ab *S_Basic) validate() error {
-	if ab.Username == "" {
-		return errors.New("invalid auth basic username | Check auth.auth_basic.username | value cannot be empty")
+func (dd *S_DynamicDetails) validate() error {
+	dd.format()
+
+	if dd.Endpoint == "" {
+		return errors.New("check auth.bearer.dynamic_details.endpoint | value cannot be empty")
 	}
 
-	if !utils.CheckIsHardCodedSecretOrEnv(ab.Username) {
-		return errors.New("invalid auth basic username | Check auth.auth_basic.username | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+	if dd.Extract == "" {
+		return errors.New("check auth.bearer.dynamic_details.extract | value cannot be empty")
 	}
 
-	if ab.Password == "" {
-		return errors.New("invalid auth basic password | Check auth.auth_basic.password | value cannot be empty")
-	}
-
-	if !utils.CheckIsHardCodedSecretOrEnv(ab.Password) {
-		return errors.New("invalid auth basic password | Check auth.auth_basic.password | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+	err := dd.EndpointConfig.Validate()
+	if err != nil {
+		return fmt.Errorf("check auth.bearer.dynamic_details.endpoint_config | %v", err.Error())
 	}
 
 	return nil
 }
 
 func (ab *S_Bearer) validate() error {
-	if ab.Name == "" {
-		ab.Name = "Authorization"
+	ab.format()
+
+	if ab.Name == nil || *ab.Name == "" {
+		return errors.New("check auth.bearer.name | value cannot be empty")
 	}
 
-	if ab.Prefix == "" {
-		ab.Prefix = "Bearer"
+	if ab.Prefix == nil || *ab.Prefix == "" {
+		return errors.New("check auth.bearer.prefix | value cannot be empty")
 	}
 
 	if ab.Token == "" {
-		return errors.New("invalid auth bearer token | Check auth.auth_bearer.token | value cannot be empty")
+		return errors.New("check auth.bearer.token | value cannot be empty")
 	}
 
 	if !utils.CheckIsHardCodedSecretOrEnv(ab.Token) {
-		return errors.New("invalid auth bearer token | Check auth.auth_bearer.token | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+		return errors.New("check auth.bearer.token | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+	}
+
+	err := ab.DynamicDetails.validate()
+	if err != nil {
+		return fmt.Errorf("check auth.bearer.dynamic_details | %v", err.Error())
 	}
 
 	return nil
 }
 
 func (apk *S_ApiKey) validate() error {
-	if apk.Name == "" {
-		return errors.New("invalid auth api key name | Check auth.auth_api_key.name | value cannot be empty")
-	}
+	apk.format()
 
-	if !slices.Contains(AVAILABLE_LOCATIONS, apk.Location) {
-		return fmt.Errorf("invalid auth api key location | Check auth.auth_api_key.location | available options: %v", AVAILABLE_LOCATIONS)
+	if apk.Name == "" {
+		return errors.New("check auth.api_key.name | value cannot be empty")
 	}
 
 	if apk.Value == "" {
-		return errors.New("invalid auth bearer token | Check auth.auth_bearer.token | value cannot be empty")
+		return errors.New("check auth.api_key.value | value cannot be empty")
 	}
 
 	if !utils.CheckIsHardCodedSecretOrEnv(apk.Value) {
-		return errors.New("invalid auth bearer token | Check auth.auth_bearer.token | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
+		return errors.New("check auth.api_key.value | value must be a hardcoded value, secret(SECRET_NAME) or env(ENV_VAR)")
 	}
 
-	return nil
-}
-
-func (abd *S_BearerDynamic) validate() error {
-	if abd.Name == "" {
-		abd.Name = "Authorization"
-	}
-
-	if abd.Prefix == "" {
-		abd.Prefix = "Bearer"
-	}
-
-	if abd.Endpoint == "" {
-		return errors.New("invalid auth bearer dynamic endpoint | Check auth.auth_bearer_dynamic.endpoint | value cannot be empty")
-	}
-
-	if !slices.Contains(METHODS_AVAILABLE, abd.Method) {
-		return fmt.Errorf("invalid auth bearer dynamic method | Check auth.auth_bearer_dynamic.method | available options: %v", METHODS_AVAILABLE)
-	}
-
-	if abd.Extract == "" {
-		return errors.New("invalid auth bearer dynamic extract | Check auth.auth_bearer_dynamic.extract | value cannot be empty")
-	}
-
-	err := abd.EndpointConfig.Validate()
-	if err != nil {
-		return fmt.Errorf("invalid auth bearer dynamic endpoint config | Check auth.auth_bearer_dynamic.endpoint_config | %v", err.Error())
+	if apk.Location == nil || !slices.Contains(AVAILABLE_LOCATIONS, *apk.Location) {
+		return fmt.Errorf("check auth.api_key.location | available options: %v", AVAILABLE_LOCATIONS)
 	}
 
 	return nil
 }
 
 func (ab *S_Cookie) validate() error {
-	if ab.Endpoint == "" {
-		return errors.New("invalid auth cookie endpoint | Check auth.auth_cookie.endpoint | value cannot be empty")
-	}
+	ab.format()
 
-	if !slices.Contains(METHODS_AVAILABLE, ab.Method) {
-		return fmt.Errorf("invalid auth cookie method | Check auth.auth_cookie.method | available options: %v", METHODS_AVAILABLE)
+	if ab.Endpoint == "" {
+		return errors.New("check auth.cookie.endpoint | value cannot be empty")
 	}
 
 	if len(ab.Extract) == 0 {
-		return errors.New("invalid auth cookie extract | Check auth.auth_cookie.extract | value cannot be empty")
+		return errors.New("check auth.cookie.extract | value cannot be empty")
 	}
 
 	err := ab.EndpointConfig.Validate()
 	if err != nil {
-		return fmt.Errorf("invalid auth cookie endpoint config | Check auth.auth_cookie.endpoint_config | %v", err.Error())
+		return fmt.Errorf("check auth.cookie.endpoint_config | %v", err.Error())
+	}
+
+	return nil
+}
+
+func (a *S_Auth) Validate() error {
+	a.format()
+
+	if !slices.Contains(MODES_AVAILABLE, a.Mode) {
+		return fmt.Errorf("check auth.mode | available options: %v", MODES_AVAILABLE)
+	}
+
+	switch a.Mode {
+	case "basic":
+		if a.Basic == nil {
+			return errors.New("check auth.basic | basic cannot be null when mode is 'basic'")
+		}
+		return a.Basic.validate()
+	case "bearer":
+		if a.Bearer == nil {
+			return errors.New("check auth.bearer | bearer cannot be null when mode is 'bearer'")
+		}
+		return a.Bearer.validate()
+	case "api_key":
+		if a.ApiKey == nil {
+			return errors.New("check auth.api_key | api_key cannot be null when mode is 'api_key'")
+		}
+		return a.ApiKey.validate()
+	case "cookie":
+		if a.Cookie == nil {
+			return errors.New("check auth.cookie | cookie cannot be null when mode is 'cookie'")
+		}
+		return a.Cookie.validate()
 	}
 
 	return nil

@@ -10,7 +10,6 @@ func (e *S_Endpoint) format() {
 	}
 
 	e.URI = strings.TrimSpace(strings.ToLower(e.URI))
-	e.Method = endpointResponseMethod(strings.TrimSpace(strings.ToUpper(string(e.Method))))
 	e.ResponseFormat = endpointResponseFormat(strings.TrimSpace(strings.ToLower(string(e.ResponseFormat))))
 
 	if e.LimitExtract == nil {

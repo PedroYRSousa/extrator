@@ -3,6 +3,8 @@ package endpoint_config
 import (
 	"errors"
 	"extrator/internal/utils"
+	"fmt"
+	"slices"
 	"strings"
 )
 
@@ -14,6 +16,10 @@ func (r *S_Retry) validate() error {
 
 func (ec *S_EndpointConfig) Validate() error {
 	ec.format()
+
+	if !slices.Contains(METHODS_AVAILABLE, *ec.Method) {
+		return fmt.Errorf("check endpoint.method | available options: %v", METHODS_AVAILABLE)
+	}
 
 	err := ec.Retry.validate()
 	if err != nil {

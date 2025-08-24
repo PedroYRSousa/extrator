@@ -25,6 +25,11 @@ func (ec *S_EndpointConfig) format() {
 		return
 	}
 
+	if ec.Method == nil {
+		ec.Method = new(endpointResponseMethod)
+		*ec.Method = ENDPOINT_ENDPOINT_CONFIG_METHOD_DEFAULT
+	}
+
 	if ec.StatusCodeWaiting == nil {
 		ec.StatusCodeWaiting = new([]uint)
 		*ec.StatusCodeWaiting = ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_WAITING_DEFAULT

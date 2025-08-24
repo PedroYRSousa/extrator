@@ -10,10 +10,10 @@ description: Extraindo dados de teste de dummyjson.com
 ################
 endpoint:
   uri: "https://dummyjson.com/products" # Obrigatório
-  method: GET # Obrigatório
   response_format: JSON # Obrigatório
   limit_extract: 1 # Opcional
   endpoint_config: # Opcional
+    method: GET
     status_code_waiting:
       - 429
     status_code_success:
@@ -68,35 +68,35 @@ auth:
     name: Authorization
     prefix: Bearer
     token: token_value
+    dynamic: false # false | true
+    dynamic_details:
+      persist: true # true | false
+      endpoint: "https://example.com/api/token"
+      method: POST
+      extract: $.access_token
+      endpoint_config:
+        timeout_in_seconds: 30
+        headers:
+          Content-Type: application/json
+        body: 
+          param1: value1
+          param2: value2
+        retry:
+          attempts: 3
+          delay_in_seconds: 5
+          backoff_factor: 2
+        status_code_waiting:
+          - 429
+        status_code_success:
+          - 200
+        status_code_skip:
+          - 204
+        waiting_time_in_seconds: 60
+        waiting_time_in_error_in_seconds: 30
   api_key: # Obrigatório se mode for api_key
     name: api_key
     location: header
     value: api_key_value
-  bearer_dynamic: # Obrigatório se mode for bearer_dynamic
-    name: Authorization
-    prefix: Bearer
-    endpoint: "https://example.com/api/token"
-    method: POST
-    extract: $.access_token
-    endpoint_config:
-      timeout_in_seconds: 30
-      headers:
-        Content-Type: application/json
-      body: 
-        param1: value1
-        param2: value2
-      retry:
-        attempts: 3
-        delay_in_seconds: 5
-        backoff_factor: 2
-      status_code_waiting:
-        - 429
-      status_code_success:
-        - 200
-      status_code_skip:
-        - 204
-      waiting_time_in_seconds: 60
-      waiting_time_in_error_in_seconds: 30
   cookie: # Obrigatório se mode for cookie
     endpoint: "https://example.com/api/token"
     method: POST

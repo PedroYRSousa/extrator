@@ -12,6 +12,7 @@ func newRetry() *S_Retry {
 }
 
 func newEndpointConfig() *S_EndpointConfig {
+	method := ENDPOINT_ENDPOINT_CONFIG_METHOD_DEFAULT
 	statusCodeWaiting := ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_SKIPPING_DEFAULT
 	statusCodeSuccess := ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_SKIPPING_DEFAULT
 	statusCodeSkip := ENDPOINT_ENDPOINT_CONFIG_STATUS_CODE_SKIPPING_DEFAULT
@@ -20,6 +21,7 @@ func newEndpointConfig() *S_EndpointConfig {
 	timeoutInSeconds := ENDPOINT_ENDPOINT_CONFIG_TIMEOUT_IN_SECONDS_DEFAULT
 
 	return &S_EndpointConfig{
+		Method:                    &method,
 		StatusCodeWaiting:         &statusCodeWaiting,
 		StatusCodeSuccess:         &statusCodeSuccess,
 		StatusCodeSkip:            &statusCodeSkip,
