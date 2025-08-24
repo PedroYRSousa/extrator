@@ -1,6 +1,6 @@
 package auth
 
-import "extrator/internal/config/endpoint"
+import "extrator/internal/product/endpoint"
 
 type S_AuthBasic struct {
 	Username string `yaml:"username"`

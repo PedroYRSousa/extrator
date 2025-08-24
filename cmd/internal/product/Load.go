@@ -1,14 +1,15 @@
-package config
+package product
 
 import (
 	"errors"
+	"extrator/internal/utils"
 	"os"
 	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
-func (c *S_Config) validate() error {
+func (c *S_Product) validate() error {
 	if (c.Name == "") || (strings.TrimSpace(c.Name) == "") {
 		return errors.New("invalid config name | Check name | name cannot be empty")
 	}
@@ -89,11 +90,11 @@ func loadConfigFile() (s_ConfigFile, error) {
 	return config, nil
 }
 
-func parseConfig(configFile s_ConfigFile) (map[string][]S_Config, error) {
-	configs := make(map[string][]S_Config)
+func parseConfig(configFile s_ConfigFile) (map[string][]S_Product, error) {
+	configs := make(map[string][]S_Product)
 
 	for _, product := range configFile.products {
-		configs[product.Name] = []S_Config{}
+		configs[product.Name] = []S_Product{}
 
 		for _, endpoint := range product.Endpoints {
 			data, err := os.ReadFile(endpoint.Path)
@@ -101,12 +102,13 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_Config, error) {
 				return nil, err
 			}
 
-			var config S_Config
+			var config S_Product
 			err = yaml.Unmarshal(data, &config)
 			if err != nil {
 				return nil, err
 			}
 
+			config.Path = utils.JoinPaths(utils.GetDataPaths(), product.Name)
 			configs[product.Name] = append(configs[product.Name], config)
 		}
 	}
@@ -114,7 +116,7 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_Config, error) {
 	return configs, nil
 }
 
-func validateConfig(configs map[string][]S_Config) error {
+func validateConfig(configs map[string][]S_Product) error {
 	for _, productConfigs := range configs {
 		for _, config := range productConfigs {
 			err := config.validate()
@@ -127,7 +129,7 @@ func validateConfig(configs map[string][]S_Config) error {
 	return nil
 }
 
-func Load() (map[string][]S_Config, error) {
+func Load() (map[string][]S_Product, error) {
 	s_ConfigFile, err := loadConfigFile()
 	if err != nil {
 		return nil, err

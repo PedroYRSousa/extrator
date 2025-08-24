@@ -20,7 +20,12 @@ func AsyncWithLimit(maxConcurrent int, wg *sync.WaitGroup, f func()) {
 }
 
 func Async(wg *sync.WaitGroup, f func()) {
-	AsyncWithLimit(-1, wg, f)
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		f()
+	}()
 }
 
 func ExecWithAttempts(maxAtt int, f func() error) error {

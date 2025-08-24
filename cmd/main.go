@@ -1,15 +1,23 @@
 package main
 
 import (
-	"extrator/internal/config"
+	"extrator/internal/product"
 	"log"
+	"sync"
 )
 
 func main() {
-	config, err := config.Load()
+	var wg sync.WaitGroup
+
+	products, err := product.Load()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	log.Printf("%+v", config)
+	for productName, productData := range products {
+		log.Println(productName)
+		log.Println(productData)
+	}
+
+	wg.Wait()
 }
