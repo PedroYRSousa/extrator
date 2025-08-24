@@ -3,7 +3,7 @@ package product
 import (
 	"extrator/internal/product/auth"
 	"extrator/internal/product/endpoint"
-	"extrator/internal/product/tables"
+	"extrator/internal/product/table"
 )
 
 const configPath = "../config"
@@ -23,15 +23,12 @@ type s_ConfigFile struct {
 	products []s_ProductConfigFile
 }
 
-type S_Product struct {
-	Name        string `yaml:"name"`
+type S_ProductEndpoint struct {
 	Path        string
-	Version     string `yaml:"version"`
-	Description string `yaml:"description"`
-
-	Endpoint endpoint.S_Endpoint `yaml:"endpoint"`
-
-	Auth auth.S_Auth `yaml:"auth"`
-
-	Tables []tables.S_Table `yaml:"tables"`
+	Name        string              `yaml:"name"`
+	Version     string              `yaml:"version"`
+	Description string              `yaml:"description"`
+	Endpoint    endpoint.S_Endpoint `yaml:"endpoint"`
+	Auth        auth.S_Auth         `yaml:"auth"`
+	Tables      []table.S_Table     `yaml:"tables"`
 }

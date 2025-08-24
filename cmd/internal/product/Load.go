@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func (c *S_Product) validate() error {
+func (c *S_ProductEndpoint) validate() error {
 	if (c.Name == "") || (strings.TrimSpace(c.Name) == "") {
 		return errors.New("invalid config name | Check name | name cannot be empty")
 	}
@@ -90,11 +90,11 @@ func loadConfigFile() (s_ConfigFile, error) {
 	return config, nil
 }
 
-func parseConfig(configFile s_ConfigFile) (map[string][]S_Product, error) {
-	configs := make(map[string][]S_Product)
+func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error) {
+	products := make(map[string][]S_ProductEndpoint)
 
 	for _, product := range configFile.products {
-		configs[product.Name] = []S_Product{}
+		products[product.Name] = []S_ProductEndpoint{}
 
 		for _, endpoint := range product.Endpoints {
 			data, err := os.ReadFile(endpoint.Path)
@@ -102,23 +102,28 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_Product, error) {
 				return nil, err
 			}
 
-			var config S_Product
-			err = yaml.Unmarshal(data, &config)
+			var product S_ProductEndpoint
+			err = yaml.Unmarshal(data, &product)
 			if err != nil {
 				return nil, err
 			}
 
-			config.Path = utils.JoinPaths(utils.GetDataPaths(), product.Name)
-			configs[product.Name] = append(configs[product.Name], config)
+			product.Path = utils.JoinPaths(utils.GetDataPaths(), product.Name)
+			products[product.Name] = append(products[product.Name], product)
 		}
 	}
 
-	return configs, nil
+	return products, nil
 }
 
-func validateConfig(configs map[string][]S_Product) error {
+func formatAndValidateConfig(configs map[string][]S_ProductEndpoint) error {
 	for _, productConfigs := range configs {
 		for _, config := range productConfigs {
+			config.Endpoint.Format()
+			config.Auth.Format()
+			for index := range config.Tables {
+				config.Tables[index].Format()
+			}
 			err := config.validate()
 			if err != nil {
 				return err
@@ -129,7 +134,7 @@ func validateConfig(configs map[string][]S_Product) error {
 	return nil
 }
 
-func Load() (map[string][]S_Product, error) {
+func Load() (map[string][]S_ProductEndpoint, error) {
 	s_ConfigFile, err := loadConfigFile()
 	if err != nil {
 		return nil, err
@@ -140,7 +145,7 @@ func Load() (map[string][]S_Product, error) {
 		return nil, err
 	}
 
-	err = validateConfig(config)
+	err = formatAndValidateConfig(config)
 	if err != nil {
 		return nil, err
 	}

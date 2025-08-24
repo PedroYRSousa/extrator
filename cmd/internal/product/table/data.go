@@ -1,4 +1,4 @@
-package tables
+package table
 
 type S_Column struct {
 	Path   string  `yaml:"path"`

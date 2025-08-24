@@ -12,7 +12,7 @@ import (
 )
 
 func (e *S_Endpoint) Validate() error {
-	if strings.TrimSpace(e.URI) == "" {
+	if e.URI == "" {
 		return errors.New("invalid endpoint uri | Check endpoint.uri | value cannot be empty")
 	}
 
@@ -28,19 +28,14 @@ func (e *S_Endpoint) Validate() error {
 
 	// Foco na extração de dados
 	methodsAvailable := []string{http.MethodGet, http.MethodPost}
-	if !slices.Contains(methodsAvailable, strings.ToUpper(e.Method)) {
+	if !slices.Contains(methodsAvailable, e.Method) {
 		return fmt.Errorf("invalid endpoint method | Check endpoint.method | available options: %v", methodsAvailable)
 	}
 
 	// Por hora somente esses formatos são suportados para extração de dados
 	responsesFormatAvailable := []string{"json"}
-	if !slices.Contains(responsesFormatAvailable, strings.ToLower(e.ResponseFormat)) {
+	if !slices.Contains(responsesFormatAvailable, e.ResponseFormat) {
 		return fmt.Errorf("invalid endpoint response format | Check endpoint.response_format | available options: %v", responsesFormatAvailable)
-	}
-
-	if e.LimitExtract != nil {
-		e.LimitExtract = new(int)
-		*e.LimitExtract = -1
 	}
 
 	err = e.EndpointConfig.Validate()
@@ -52,7 +47,7 @@ func (e *S_Endpoint) Validate() error {
 }
 
 func (qp *S_QueryParam) validate() error {
-	if strings.TrimSpace(qp.Name) == "" {
+	if qp.Name == "" {
 		return errors.New("invalid endpoint query param name | Check endpoint.query_params.name | name cannot be empty")
 	}
 
@@ -74,39 +69,29 @@ func (r *S_Retry) validate() error {
 		return errors.New("invalid endpoint config retry delay in seconds | Check endpoint.endpoint_config.retry.delay_in_seconds | value must be greater than or equal to 0")
 	}
 
-	if r.BackoffFactor == nil {
-		r.BackoffFactor = new(int)
-		*r.BackoffFactor = 0
-	} else {
-		if *r.BackoffFactor < 0 {
-			return errors.New("invalid endpoint config retry backoff factor | Check endpoint.endpoint_config.retry.backoff_factor | value must be greater than or equal to 0")
-		}
+	if *r.BackoffFactor < 0 {
+		return errors.New("invalid endpoint config retry backoff factor | Check endpoint.endpoint_config.retry.backoff_factor | value must be greater than or equal to 0")
 	}
 
 	return nil
 }
 
 func (p *S_Pagination) validate() error {
-	if p.Mode == nil {
-		p.Mode = new(string)
-		*p.Mode = "none"
-	}
-
 	availableModes := []string{"none", "offset", "page", "property", "link_header"}
-	if !slices.Contains(availableModes, strings.ToLower(*p.Mode)) {
+	if !slices.Contains(availableModes, *p.Mode) {
 		return fmt.Errorf("invalid endpoint config pagination mode | Check endpoint.endpoint_config.pagination.mode | available options: %v", availableModes)
 	}
 
-	if strings.ToLower(*p.Mode) == "none" {
+	if *p.Mode == "none" {
 		return nil
 	}
 
-	if strings.ToLower(*p.Mode) == "offset" {
-		if strings.TrimSpace(p.Offset) == "" {
+	if *p.Mode == "offset" {
+		if p.Offset == "" {
 			return errors.New("invalid endpoint config pagination offset | Check endpoint.endpoint_config.pagination.offset | value cannot be empty when mode is 'offset'")
 		}
 
-		if strings.TrimSpace(p.Limit) == "" {
+		if p.Limit == "" {
 			return errors.New("invalid endpoint config pagination limit | Check endpoint.endpoint_config.pagination.limit | value cannot be empty when mode is 'offset'")
 		}
 
@@ -115,8 +100,8 @@ func (p *S_Pagination) validate() error {
 		}
 	}
 
-	if strings.ToLower(*p.Mode) == "page" {
-		if strings.TrimSpace(p.Page) == "" {
+	if *p.Mode == "page" {
+		if p.Page == "" {
 			return errors.New("invalid endpoint config pagination page | Check endpoint.endpoint_config.pagination.page | value cannot be empty when mode is 'page'")
 		}
 		if p.PageSize <= 0 {
@@ -124,21 +109,21 @@ func (p *S_Pagination) validate() error {
 		}
 	}
 
-	if (strings.ToLower(*p.Mode) == "property") && (strings.TrimSpace(p.Property) == "") {
+	if (*p.Mode == "property") && (p.Property == "") {
 		return errors.New("invalid endpoint config pagination property | Check endpoint.endpoint_config.pagination.property | value cannot be empty when mode is 'property'")
 	}
 
-	if (strings.ToLower(*p.Mode) == "link_header") && (strings.TrimSpace(p.Header) == "") {
+	if (*p.Mode == "link_header") && (p.Header == "") {
 		return errors.New("invalid endpoint config pagination header | Check endpoint.endpoint_config.pagination.header | value cannot be empty when mode is 'link_header'")
 	}
 
 	availableDirections := []string{"next", "previous"}
-	if !slices.Contains(availableDirections, strings.ToLower(p.Direction)) {
+	if !slices.Contains(availableDirections, p.Direction) {
 		return fmt.Errorf("invalid endpoint config pagination direction | Check endpoint.endpoint_config.pagination.direction | available options: %v", availableDirections)
 	}
 
 	availableLocations := []string{"body", "header", "query_param"}
-	if !slices.Contains(availableLocations, strings.ToLower(p.Location)) {
+	if !slices.Contains(availableLocations, p.Location) {
 		return fmt.Errorf("invalid endpoint config pagination location | Check endpoint.endpoint_config.pagination.location | available options: %v", availableLocations)
 	}
 

@@ -1,5 +1,7 @@
 package product
 
-func (c *S_Product) Start() {
+import "log"
 
+func (c *S_ProductEndpoint) Start() {
+	log.Println("Start", *c)
 }
