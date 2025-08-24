@@ -37,8 +37,8 @@ func (plh *S_PaginationLinkHeader) format() {
 func (p *S_Pagination) format() {
 	p.Mode = paginationMode(strings.TrimSpace(strings.ToLower(string(p.Mode))))
 
-	p.Offset.Format()
-	p.Page.Format()
-	p.Property.Format()
-	p.LinkHeader.Format()
+	p.Offset.format()
+	p.Page.format()
+	p.Property.format()
+	p.LinkHeader.format()
 }

@@ -4,14 +4,14 @@ import (
 	"errors"
 	"extrator/internal/utils"
 	"fmt"
-	"net/http"
 	"slices"
 )
 
 func (a *S_Auth) Validate() error {
-	modesAvailable := []string{"none", "basic", "bearer", "bearer_dynamic", "cookie", "api_key"}
-	if !slices.Contains(modesAvailable, a.Mode) {
-		return fmt.Errorf("invalid auth mode | Check auth.auth_mode | available options: %v", modesAvailable)
+	a.format()
+
+	if !slices.Contains(MODES_AVAILABLE, a.Mode) {
+		return fmt.Errorf("invalid auth mode | Check auth.auth_mode | available options: %v", MODES_AVAILABLE)
 	}
 
 	switch a.Mode {
@@ -90,9 +90,8 @@ func (apk *S_ApiKey) validate() error {
 		return errors.New("invalid auth api key name | Check auth.auth_api_key.name | value cannot be empty")
 	}
 
-	availableLocations := []string{"header", "query_param"}
-	if !slices.Contains(availableLocations, apk.Location) {
-		return fmt.Errorf("invalid auth api key location | Check auth.auth_api_key.location | available options: %v", availableLocations)
+	if !slices.Contains(AVAILABLE_LOCATIONS, apk.Location) {
+		return fmt.Errorf("invalid auth api key location | Check auth.auth_api_key.location | available options: %v", AVAILABLE_LOCATIONS)
 	}
 
 	if apk.Value == "" {
@@ -119,9 +118,8 @@ func (abd *S_BearerDynamic) validate() error {
 		return errors.New("invalid auth bearer dynamic endpoint | Check auth.auth_bearer_dynamic.endpoint | value cannot be empty")
 	}
 
-	methodsAvailable := []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodPut}
-	if !slices.Contains(methodsAvailable, abd.Method) {
-		return fmt.Errorf("invalid auth bearer dynamic method | Check auth.auth_bearer_dynamic.method | available options: %v", methodsAvailable)
+	if !slices.Contains(METHODS_AVAILABLE, abd.Method) {
+		return fmt.Errorf("invalid auth bearer dynamic method | Check auth.auth_bearer_dynamic.method | available options: %v", METHODS_AVAILABLE)
 	}
 
 	if abd.Extract == "" {
@@ -141,9 +139,8 @@ func (ab *S_Cookie) validate() error {
 		return errors.New("invalid auth cookie endpoint | Check auth.auth_cookie.endpoint | value cannot be empty")
 	}
 
-	methodsAvailable := []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodPut}
-	if !slices.Contains(methodsAvailable, ab.Method) {
-		return fmt.Errorf("invalid auth cookie method | Check auth.auth_cookie.method | available options: %v", methodsAvailable)
+	if !slices.Contains(METHODS_AVAILABLE, ab.Method) {
+		return fmt.Errorf("invalid auth cookie method | Check auth.auth_cookie.method | available options: %v", METHODS_AVAILABLE)
 	}
 
 	if len(ab.Extract) == 0 {
