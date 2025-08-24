@@ -18,7 +18,7 @@ func (ec *S_EndpointConfig) Validate() error {
 	ec.format()
 
 	if !slices.Contains(METHODS_AVAILABLE, *ec.Method) {
-		return fmt.Errorf("check endpoint.method | available options: %v", METHODS_AVAILABLE)
+		return fmt.Errorf("check endpoint_config.method | available options: %v", METHODS_AVAILABLE)
 	}
 
 	err := ec.Retry.validate()

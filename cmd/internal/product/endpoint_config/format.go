@@ -59,6 +59,4 @@ func (ec *S_EndpointConfig) format() {
 		ec.TimeoutInSeconds = new(uint)
 		*ec.TimeoutInSeconds = ENDPOINT_ENDPOINT_CONFIG_TIMEOUT_IN_SECONDS_DEFAULT
 	}
-
-	ec.Retry.format()
 }
