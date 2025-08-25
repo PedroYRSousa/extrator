@@ -135,21 +135,15 @@ tables:
       - path: id
         alias: id
         type: integer # string | integer | double | boolean | date | datetime | array
-        format: "" # Usado quando type é 'date' ou 'datetime'
-        # format pode ser "2006-01-02" para date ou "2006-01-02T15:04:05Z07:00" para datetime
       - path: title
         alias: title
         type: string # string | integer | double | boolean | date | datetime | array
-        format: "" # Usado quando type é 'date' ou 'datetime'
       - path: description
         alias: description
         type: string # string | integer | double | boolean | date | datetime | array
-        format: "" # Usado quando type é 'date' ou 'datetime'
       - path: price
         alias: price
         type: double # string | integer | double | boolean | date | datetime | array
-        format: "" # Usado quando type é 'date' ou 'datetime'
       - path: price
         alias: price
         type: double # string | integer | double | boolean | date | datetime | array
-        format: "" # Usado quando type é 'date' ou 'datetime'

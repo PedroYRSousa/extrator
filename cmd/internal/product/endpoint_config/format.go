@@ -26,7 +26,7 @@ func (ec *S_EndpointConfig) format() {
 	}
 
 	if ec.Method == nil {
-		ec.Method = new(endpointResponseMethod)
+		ec.Method = new(endpointMethod)
 		*ec.Method = ENDPOINT_ENDPOINT_CONFIG_METHOD_DEFAULT
 	}
 
