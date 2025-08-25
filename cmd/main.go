@@ -15,17 +15,9 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	products, err := product.Load()
+	_, err := product.Load()
 	if err != nil {
 		log.Fatalln("ERROR", err)
-	}
-
-	for k, v := range products {
-		log.Printf("Product %s %+v", k, v)
-		log.Printf("Endpoint %s %+v", k, v[0].Endpoint)
-		log.Printf("Pagination %s %+v", k, v[0].Pagination)
-		log.Printf("Auth %s %+v", k, v[0].Auth)
-		log.Printf("Tables %s %+v", k, v[0].Tables)
 	}
 
 	// for productName := range products {

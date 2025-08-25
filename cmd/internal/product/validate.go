@@ -5,6 +5,8 @@ import (
 )
 
 func (c *S_ProductEndpoint) validate() error {
+	c.format()
+
 	if c.Name == "" {
 		return errors.New("invalid config | Check name | name cannot be empty")
 	}

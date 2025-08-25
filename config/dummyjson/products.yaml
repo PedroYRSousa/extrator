@@ -1,7 +1,7 @@
 #############
 #   BASIC   #
 #############
-name: Products
+name: "             Products"
 version: 0.1.0
 description: Extraindo dados de teste de dummyjson.com
 

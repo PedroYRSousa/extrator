@@ -82,11 +82,25 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 	return products, nil
 }
 
-func formatAndValidateConfig(configs map[string][]S_ProductEndpoint) error {
+func validateConfig(configs map[string][]S_ProductEndpoint) error {
 	for _, productConfigs := range configs {
-		for _, config := range productConfigs {
-			config.format()
-			err := config.validate()
+		for index := range productConfigs {
+			err := productConfigs[index].validate()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	log.Println(configs)
+
+	return nil
+}
+
+func transformConfig(configs map[string][]S_ProductEndpoint) error {
+	for _, productConfigs := range configs {
+		for index := range productConfigs {
+			err := productConfigs[index].transform()
 			if err != nil {
 				return err
 			}
@@ -110,7 +124,12 @@ func Load() (map[string][]S_ProductEndpoint, error) {
 		return nil, err
 	}
 
-	err = formatAndValidateConfig(config)
+	err = validateConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	err = transformConfig(config)
 	if err != nil {
 		return nil, err
 	}

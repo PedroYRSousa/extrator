@@ -93,10 +93,6 @@ func (p *S_Pagination) Validate() error {
 		return fmt.Errorf("check pagination.mode | available options: %v", AVAILABLE_MODES)
 	}
 
-	if p.Mode == PAGINATION_MODE_NONE {
-		return nil
-	}
-
 	switch p.Mode {
 	case PAGINATION_MODE_OFFSET:
 		if p.Offset == nil {

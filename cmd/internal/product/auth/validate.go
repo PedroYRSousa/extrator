@@ -97,18 +97,18 @@ func (apk *S_ApiKey) validate() error {
 	return nil
 }
 
-func (ab *S_Cookie) validate() error {
-	ab.format()
+func (c *S_Cookie) validate() error {
+	c.format()
 
-	if ab.Endpoint == "" {
+	if c.Endpoint == "" {
 		return errors.New("check auth.cookie.endpoint | value cannot be empty")
 	}
 
-	if len(ab.Extract) == 0 {
+	if len(c.Extract) == 0 {
 		return errors.New("check auth.cookie.extract | value cannot be empty")
 	}
 
-	err := ab.EndpointConfig.Validate()
+	err := c.EndpointConfig.Validate()
 	if err != nil {
 		return fmt.Errorf("check auth.cookie.endpoint_config | %v", err.Error())
 	}
