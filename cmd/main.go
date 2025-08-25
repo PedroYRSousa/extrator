@@ -13,7 +13,7 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	products, err := product.Load()
+	_, err := product.Load()
 	if err != nil {
 		log.Fatalln("ERROR", err)
 	}

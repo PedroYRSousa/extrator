@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"sync"
+	"time"
 )
 
 func AsyncWithLimit(maxConcurrent int, wg *sync.WaitGroup, f func()) {
@@ -28,15 +29,16 @@ func Async(wg *sync.WaitGroup, f func()) {
 	}()
 }
 
-func ExecWithAttempts(maxAtt int, f func() error) error {
+func ExecWithAttempts(maxAtt, delayInSeconds int, f func() error) error {
 	var err error
 
 	for att := 1; att <= maxAtt; att++ {
 		if err = f(); err == nil {
 			return nil
 		}
-		log.Printf("ERROR | Attempt %d/%d | %v", att, maxAtt, err)
+		log.Printf("ERROR | Attempt %d/%d | Waiting %d seconds to continue | %v", att, maxAtt, delayInSeconds, err)
+		time.Sleep(time.Duration(delayInSeconds) * time.Second)
 	}
 
-	return fmt.Errorf("max attempts reached | last error: %w", err)
+	return fmt.Errorf("ERROR | Max attempts reached | last error: %w", err)
 }
