@@ -60,7 +60,7 @@ pagination:
 #   AUTH   #
 ############
 auth:
-  mode: none  # Obrigatório
+  mode: basic  # Obrigatório
   basic: # Obrigatório se mode for basic
     username: user
     password: pass

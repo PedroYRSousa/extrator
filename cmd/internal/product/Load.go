@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 	"strings"
-	"time"
 
 	"gopkg.in/yaml.v3"
 )
@@ -30,6 +29,8 @@ func readEndpoints(product s_ProductConfigFile) (s_ProductConfigFile, error) {
 }
 
 func loadConfigFile() (s_ConfigFile, error) {
+	log.Println("Read file configuration")
+
 	config := s_ConfigFile{
 		products: []s_ProductConfigFile{},
 	}
@@ -83,6 +84,8 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 }
 
 func validateConfig(configs map[string][]S_ProductEndpoint) error {
+	log.Println("Validate configuration")
+
 	for _, productConfigs := range configs {
 		for index := range productConfigs {
 			err := productConfigs[index].validate()
@@ -91,8 +94,6 @@ func validateConfig(configs map[string][]S_ProductEndpoint) error {
 			}
 		}
 	}
-
-	log.Println(configs)
 
 	return nil
 }
@@ -111,8 +112,7 @@ func transformConfig(configs map[string][]S_ProductEndpoint) error {
 }
 
 func Load() (map[string][]S_ProductEndpoint, error) {
-	startTime := time.Now()
-	log.Println("Start loading configuration")
+	log.Println("Loading configuration")
 
 	s_ConfigFile, err := loadConfigFile()
 	if err != nil {
@@ -134,7 +134,7 @@ func Load() (map[string][]S_ProductEndpoint, error) {
 		return nil, err
 	}
 
-	log.Println("End loading configuration", time.Since(startTime))
+	log.Printf("Configuration Read")
 
 	return config, nil
 }

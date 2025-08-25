@@ -4,18 +4,16 @@ import (
 	"extrator/internal/product"
 	"log"
 	"sync"
-	"time"
 )
 
 func main() {
-	startTime := time.Now()
 	log.Println("Start extraction")
 
 	// TODO, adicionar controle de versão
 
 	var wg sync.WaitGroup
 
-	_, err := product.Load()
+	products, err := product.Load()
 	if err != nil {
 		log.Fatalln("ERROR", err)
 	}
@@ -34,6 +32,4 @@ func main() {
 	// }
 
 	wg.Wait()
-
-	log.Println("End extraction", time.Since(startTime))
 }
