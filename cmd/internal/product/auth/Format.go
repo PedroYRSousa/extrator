@@ -65,14 +65,12 @@ func (apk *S_ApiKey) format() {
 	}
 }
 
-func (ab *S_Cookie) format() {
-	if ab == nil {
+func (c *S_Cookie) format() {
+	if c == nil {
 		panic("Cookie is required")
 	}
-	ab.Endpoint = strings.TrimSpace(ab.Endpoint)
-	for index := range ab.Extract {
-		ab.Extract[index] = strings.TrimSpace(ab.Extract[index])
-	}
+
+	c.Endpoint = strings.TrimSpace(c.Endpoint)
 }
 
 func (a *S_Auth) format() {

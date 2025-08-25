@@ -62,8 +62,7 @@ type S_ApiKey struct {
 }
 
 type S_Cookie struct {
-	Endpoint string   `yaml:"endpoint"`
-	Extract  []string `yaml:"extract"`
+	Endpoint string `yaml:"endpoint"`
 
 	// Opcionais
 	EndpointConfig *endpointconfig.S_EndpointConfig `yaml:"endpoint_config"`

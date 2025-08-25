@@ -2,6 +2,7 @@ package main
 
 import (
 	"extrator/internal/product"
+	"extrator/internal/utils"
 	"log"
 	"sync"
 )
@@ -13,23 +14,26 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	_, err := product.Load()
+	products, err := product.Load()
 	if err != nil {
 		log.Fatalln("ERROR", err)
 	}
 
-	// for productName := range products {
-	// 	productEndpoints := products[productName]
-	// 	// TODO, adicionar controle de produtos
-	// 	utils.AsyncWithLimit(3, &wg, func() {
-	// 		for index := range productEndpoints {
-	// 			// TODO, adicionar controle de endpoints
-	// 			utils.AsyncWithLimit(10, &wg, func() {
-	// 				productEndpoints[index].Start()
-	// 			})
-	// 		}
-	// 	})
-	// }
+	for productName := range products {
+		productEndpoints := products[productName]
+		// TODO, adicionar controle de produtos
+		utils.AsyncWithLimit(3, &wg, func() {
+			for index := range productEndpoints {
+				// TODO, adicionar controle de endpoints
+				utils.AsyncWithLimit(10, &wg, func() {
+					err := productEndpoints[index].Start()
+					if err != nil {
+						log.Fatalln("ERROR", err)
+					}
+				})
+			}
+		})
+	}
 
 	wg.Wait()
 }

@@ -9,6 +9,8 @@ require (
 )
 
 require (
+	github.com/PaesslerAG/gval v1.0.0 // indirect
+	github.com/PaesslerAG/jsonpath v0.1.1 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/stretchr/testify v1.10.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect

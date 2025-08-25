@@ -104,10 +104,6 @@ func (c *S_Cookie) validate() error {
 		return errors.New("check auth.cookie.endpoint | value cannot be empty")
 	}
 
-	if len(c.Extract) == 0 {
-		return errors.New("check auth.cookie.extract | value cannot be empty")
-	}
-
 	err := c.EndpointConfig.Validate()
 	if err != nil {
 		return fmt.Errorf("check auth.cookie.endpoint_config | %v", err.Error())
@@ -124,22 +120,22 @@ func (a *S_Auth) Validate() error {
 	}
 
 	switch a.Mode {
-	case "basic":
+	case AUTH_MODE_BASIC:
 		if a.Basic == nil {
 			return errors.New("check auth.basic | basic cannot be null when mode is 'basic'")
 		}
 		return a.Basic.validate()
-	case "bearer":
+	case AUTH_MODE_BEARER:
 		if a.Bearer == nil {
 			return errors.New("check auth.bearer | bearer cannot be null when mode is 'bearer'")
 		}
 		return a.Bearer.validate()
-	case "api_key":
+	case AUTH_MODE_API_KEY:
 		if a.ApiKey == nil {
 			return errors.New("check auth.api_key | api_key cannot be null when mode is 'api_key'")
 		}
 		return a.ApiKey.validate()
-	case "cookie":
+	case AUTH_MODE_COOKIE:
 		if a.Cookie == nil {
 			return errors.New("check auth.cookie | cookie cannot be null when mode is 'cookie'")
 		}

@@ -92,13 +92,13 @@ func (c *S_Cookie) transform() error {
 
 func (a *S_Auth) Transform() error {
 	switch a.Mode {
-	case "basic":
+	case AUTH_MODE_BASIC:
 		return a.Basic.transform()
-	case "bearer":
+	case AUTH_MODE_BEARER:
 		return a.Bearer.transform()
-	case "api_key":
+	case AUTH_MODE_API_KEY:
 		return a.ApiKey.transform()
-	case "cookie":
+	case AUTH_MODE_COOKIE:
 		return a.Cookie.transform()
 	}
 

@@ -1,6 +1,7 @@
 package product
 
 import (
+	"fmt"
 	"log"
 	"net/http/httputil"
 )
@@ -13,9 +14,8 @@ func (p *S_ProductEndpoint) Start() error {
 		return err
 	}
 
-	data, err := httputil.DumpRequest(request, true)
-	log.Println(string(data))
-	log.Println(err)
+	data, _ := httputil.DumpRequest(request, true)
+	fmt.Println(string(data))
 
 	return nil
 }

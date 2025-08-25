@@ -21,13 +21,13 @@ endpoint:
     status_code_skip:
       - 400
     waiting_time_in_seconds: 60
-    waiting_time_error_in_seconds: 30 
+    waiting_time_error_in_seconds: 30
     timeout_in_seconds: 30
     retry:
       attempts: 10
       delay_in_seconds: 30
       backoff_factor: 1
-    headers: 
+    headers:
       Content-Type: application/json
     body:
       param1: value1
@@ -40,7 +40,7 @@ endpoint:
 #   PAGINATION   #
 ##################
 pagination:
-  mode: offset # Obrigatório
+  mode: none # Obrigatório
   offset: # Obrigatório se mode for offset
     direction: next
     location: query_param
@@ -60,7 +60,7 @@ pagination:
 #   AUTH   #
 ############
 auth:
-  mode: basic  # Obrigatório
+  mode: bearer # Obrigatório
   basic: # Obrigatório se mode for basic
     username: user
     password: pass
@@ -68,29 +68,25 @@ auth:
     name: Authorization
     prefix: Bearer
     token: token_value
-    dynamic: false # false | true
+    dynamic: true # false | true
     dynamic_details:
-      persist: true # true | false
-      endpoint: "https://example.com/api/token"
-      method: POST
-      extract: $.access_token
+      endpoint: "https://dummyjson.com/auth/login"
+      extract: $.accessToken
       endpoint_config:
+        method: POST
         timeout_in_seconds: 30
         headers:
           Content-Type: application/json
-        body: 
-          param1: value1
-          param2: value2
+        body:
+          username: emilys
+          password: emilyspass
         retry:
           attempts: 3
-          delay_in_seconds: 5
-          backoff_factor: 2
+          delay_in_seconds: 1
         status_code_waiting:
           - 429
         status_code_success:
           - 200
-        status_code_skip:
-          - 204
         waiting_time_in_seconds: 60
         waiting_time_in_error_in_seconds: 30
   api_key: # Obrigatório se mode for api_key
@@ -100,14 +96,11 @@ auth:
   cookie: # Obrigatório se mode for cookie
     endpoint: "https://example.com/api/token"
     method: POST
-    extract:
-      - JSESSIONID
-      - SESSION_TOKEN
     endpoint_config:
       timeout_in_seconds: 30
       headers:
         Content-Type: application/json
-      body: 
+      body:
         param1: value1
         param2: value2
       retry:
