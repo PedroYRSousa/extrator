@@ -34,7 +34,6 @@ func (ec *S_EndpointConfig) Transform() error {
 				(*ec.Body)[k] = newValue
 			} else if utils.IsSecret(v) {
 				// TODO, Pegar da aws secretmanager
-
 			}
 		}
 	}

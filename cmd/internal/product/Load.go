@@ -76,6 +76,7 @@ func parseConfig(configFile s_ConfigFile) (map[string][]S_ProductEndpoint, error
 				return nil, err
 			}
 
+			productEndpoint.ProductName = product.Name
 			products[product.Name] = append(products[product.Name], productEndpoint)
 		}
 	}

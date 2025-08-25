@@ -25,6 +25,7 @@ type s_ConfigFile struct {
 }
 
 type S_ProductEndpoint struct {
+	ProductName string
 	Name        string `yaml:"name"`
 	Version     string `yaml:"version"`
 	Description string `yaml:"description"`

@@ -15,7 +15,6 @@ const (
 var (
 	// Por hora somente esses formatos são suportados para extração de dados
 	RESPONSES_FORMAT_AVAILABLE = []endpointResponseFormat{ENDPOINT_RESPONSE_FORMAT_JSON}
-	// Foco na extração de dados
 )
 
 type S_Endpoint struct {
