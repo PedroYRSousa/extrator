@@ -3,7 +3,6 @@ package product
 import (
 	"extrator/internal/product/auth"
 	"extrator/internal/product/endpoint"
-	"extrator/internal/product/pagination"
 	"extrator/internal/product/table"
 )
 
@@ -30,8 +29,7 @@ type S_ProductEndpoint struct {
 	Version     string `yaml:"version"`
 	Description string `yaml:"description"`
 
-	Endpoint   endpoint.S_Endpoint     `yaml:"endpoint"`
-	Pagination pagination.S_Pagination `yaml:"pagination"`
-	Auth       auth.S_Auth             `yaml:"auth"`
-	Tables     []table.S_Table         `yaml:"tables"`
+	Endpoint endpoint.S_Endpoint `yaml:"endpoint"`
+	Auth     auth.S_Auth         `yaml:"auth"`
+	Tables   []table.S_Table     `yaml:"tables"`
 }

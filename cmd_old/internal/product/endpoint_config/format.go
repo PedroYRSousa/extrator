@@ -1,5 +1,41 @@
 package endpoint_config
 
+import "strings"
+
+func (po *S_PaginationOffset) format() {
+	po.Direction = paginationDirection(strings.TrimSpace(strings.ToLower(string(po.Direction))))
+	po.Location = paginationLocation(strings.TrimSpace(strings.ToLower(string(po.Location))))
+	po.Offset = strings.TrimSpace(po.Offset)
+	po.Limit = strings.TrimSpace(po.Limit)
+}
+
+func (pp *S_PaginationPage) format() {
+	pp.Direction = paginationDirection(strings.TrimSpace(strings.ToLower(string(pp.Direction))))
+	pp.Location = paginationLocation(strings.TrimSpace(strings.ToLower(string(pp.Location))))
+	pp.Page = strings.TrimSpace(pp.Page)
+	if pp.PageSize <= 0 {
+		pp.PageSize = 1
+	}
+}
+
+func (pp *S_PaginationProperty) format() {
+	pp.Property = strings.TrimSpace(pp.Property)
+}
+
+func (plh *S_PaginationLinkHeader) format() {
+	plh.Header = strings.TrimSpace(plh.Header)
+}
+
+func (p *S_Pagination) format() {
+	if p == nil {
+		p = new(S_Pagination)
+		*p = *newPagination()
+		return
+	}
+
+	p.Mode = paginationMode(strings.TrimSpace(strings.ToLower(string(p.Mode))))
+}
+
 func (r *S_Retry) format() {
 	if r == nil {
 		r = new(S_Retry)

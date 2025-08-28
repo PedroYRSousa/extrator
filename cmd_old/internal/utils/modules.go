@@ -3,31 +3,8 @@ package utils
 import (
 	"fmt"
 	"log"
-	"sync"
 	"time"
 )
-
-func AsyncWithLimit(maxConcurrent int, wg *sync.WaitGroup, f func()) {
-	sem := make(chan struct{}, maxConcurrent)
-
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		sem <- struct{}{}        // ocupa uma "vaga"
-		defer func() { <-sem }() // libera a "vaga"
-
-		f()
-	}()
-}
-
-func Async(wg *sync.WaitGroup, f func()) {
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-
-		f()
-	}()
-}
 
 func ExecWithAttempts(maxAtt, delayInSeconds int, f func() error) error {
 	var err error

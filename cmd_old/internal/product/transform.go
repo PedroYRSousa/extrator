@@ -6,11 +6,6 @@ func (c *S_ProductEndpoint) transform() error {
 		return err
 	}
 
-	err = c.Pagination.Transform()
-	if err != nil {
-		return err
-	}
-
 	err = c.Auth.Transform()
 	if err != nil {
 		return err

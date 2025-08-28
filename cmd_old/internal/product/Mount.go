@@ -10,11 +10,6 @@ func (p *S_ProductEndpoint) Mount() (*http.Request, error) {
 		return nil, err
 	}
 
-	// err = p.Pagination.Mount(&request)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
 	err = p.Auth.Mount(&request)
 	if err != nil {
 		return nil, err

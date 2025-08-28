@@ -35,7 +35,7 @@ type S_Basic struct {
 	Password string `yaml:"password"`
 }
 
-type S_DynamicDetails struct {
+type S_BearerDynamicDetails struct {
 	Endpoint string `yaml:"endpoint"`
 	Extract  string `yaml:"extract"`
 
@@ -47,10 +47,10 @@ type S_Bearer struct {
 	Token string `yaml:"token"`
 
 	// Opcionais
-	Dynamic        *bool             `yaml:"dynamic,omitempty"`
-	Name           *string           `yaml:"name,omitempty"`
-	Prefix         *string           `yaml:"prefix,omitempty"`
-	DynamicDetails *S_DynamicDetails `yaml:"dynamic_details,omitempty"`
+	Dynamic        *bool                   `yaml:"dynamic,omitempty"`
+	Name           *string                 `yaml:"name,omitempty"`
+	Prefix         *string                 `yaml:"prefix,omitempty"`
+	DynamicDetails *S_BearerDynamicDetails `yaml:"dynamic_details,omitempty"`
 }
 
 type S_ApiKey struct {

@@ -29,7 +29,7 @@ func (ab *S_Basic) transform() error {
 	return nil
 }
 
-func (dd *S_DynamicDetails) transform() error {
+func (dd *S_BearerDynamicDetails) transform() error {
 	err := dd.EndpointConfig.Transform()
 	if err != nil {
 		return err
@@ -90,17 +90,13 @@ func (c *S_Cookie) transform() error {
 	return nil
 }
 
-func (a *S_Auth) Transform() error {
-	switch a.Mode {
-	case AUTH_MODE_BASIC:
-		return a.Basic.transform()
-	case AUTH_MODE_BEARER:
-		return a.Bearer.transform()
-	case AUTH_MODE_API_KEY:
-		return a.ApiKey.transform()
-	case AUTH_MODE_COOKIE:
-		return a.Cookie.transform()
+func (auth *S_Auth) Transform() error {
+	var transforms = map[authMode]func(*S_Auth) error{
+		AUTH_MODE_BASIC:   func(_auth *S_Auth) error { return _auth.Basic.transform() },
+		AUTH_MODE_BEARER:  func(_auth *S_Auth) error { return _auth.Bearer.transform() },
+		AUTH_MODE_API_KEY: func(_auth *S_Auth) error { return _auth.ApiKey.transform() },
+		AUTH_MODE_COOKIE:  func(_auth *S_Auth) error { return _auth.Cookie.transform() },
 	}
 
-	return nil
+	return transforms[auth.Mode](auth)
 }

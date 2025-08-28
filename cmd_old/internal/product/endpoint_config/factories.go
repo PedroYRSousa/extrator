@@ -1,5 +1,11 @@
 package endpoint_config
 
+func newPagination() *S_Pagination {
+	return &S_Pagination{
+		Mode: PAGINATION_MODE_NONE,
+	}
+}
+
 func newRetry() *S_Retry {
 	attempts := ENDPOINT_RETRY_ATTEMPTS_DEFAULT
 	delayInSeconds := ENDPOINT_RETRY_DELAY_IN_SECONDS_DEFAULT

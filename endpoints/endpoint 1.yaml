@@ -1,0 +1,13 @@
+#############
+#   BASIC   #
+#############
+vendor: dummyjson
+name: products
+version: 0.1.0
+description: Extraindo dados de teste de dummyjson.com
+
+################
+#   ENDPOINT   #
+################
+endpoint:
+  uri: "https://dummyjson.com/products" 

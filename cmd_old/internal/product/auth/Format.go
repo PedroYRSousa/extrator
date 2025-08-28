@@ -13,7 +13,7 @@ func (ab *S_Basic) format() {
 	ab.Password = strings.TrimSpace(ab.Password)
 }
 
-func (dd *S_DynamicDetails) format() {
+func (dd *S_BearerDynamicDetails) format() {
 	if dd == nil {
 		panic("DynamicDetails is required")
 	}

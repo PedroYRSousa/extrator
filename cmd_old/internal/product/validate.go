@@ -24,11 +24,6 @@ func (c *S_ProductEndpoint) validate() error {
 		return err
 	}
 
-	err = c.Pagination.Validate()
-	if err != nil {
-		return err
-	}
-
 	err = c.Auth.Validate()
 	if err != nil {
 		return err
