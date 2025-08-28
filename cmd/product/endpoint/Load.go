@@ -3,9 +3,8 @@ package endpoint
 import (
 	"extrator/config"
 	"extrator/modules"
+	"log"
 	"os"
-
-	"gopkg.in/yaml.v3"
 )
 
 func Load(conf *config.S_Config, productPath string) ([]S_Endpoint, error) {
@@ -26,15 +25,12 @@ func Load(conf *config.S_Config, productPath string) ([]S_Endpoint, error) {
 			Path: modules.JoinPaths(productPath, entry.Name()),
 		}
 
-		endpointBytes, err := os.ReadFile(endpoint.Path)
+		err := modules.YamlToStruct(endpoint.Path, &endpoint)
 		if err != nil {
 			return nil, err
 		}
 
-		err = yaml.Unmarshal(endpointBytes, &endpoint)
-		if err != nil {
-			return nil, err
-		}
+		log.Println(endpoint)
 
 		err = endpoint.check()
 		if err != nil {

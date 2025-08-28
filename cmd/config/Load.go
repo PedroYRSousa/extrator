@@ -1,19 +1,12 @@
 package config
 
 import (
-	"os"
-
-	"gopkg.in/yaml.v3"
+	"extrator/modules"
 )
 
 func Load() (*S_Config, error) {
-	configBytes, err := os.ReadFile(DEFAULT_CONFIG_PATH)
-	if err != nil {
-		return nil, err
-	}
-
 	var conf S_Config
-	err = yaml.Unmarshal(configBytes, &conf)
+	err := modules.YamlToStruct(DEFAULT_CONFIG_PATH, &conf)
 	if err != nil {
 		return nil, err
 	}
