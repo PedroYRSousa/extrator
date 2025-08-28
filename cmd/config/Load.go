@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -18,8 +17,6 @@ func Load() (*S_Config, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	log.Println(conf)
 
 	err = conf.check()
 	if err != nil {
