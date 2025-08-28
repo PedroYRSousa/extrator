@@ -1,18 +1,15 @@
 package product
 
-import "fmt"
+import (
+	"github.com/go-playground/validator"
+)
 
 func (product *S_Product) validate() error {
-	if product.Name == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
-	}
+	validate := validator.New()
 
-	if product.Path == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
-	}
-
-	if product.Endpoints == nil {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
+	err := validate.Struct(*product)
+	if err != nil {
+		return err
 	}
 
 	return nil

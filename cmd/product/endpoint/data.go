@@ -1,11 +1,8 @@
 package endpoint
 
 type S_Endpoint struct {
-	// Obrigatório
-	Name        string
-	Path        string
-	Version     string `yaml:"version"`
-	Description string `yaml:"description"`
-
-	// Opcionais
+	Name        string `validate:"required,printascii"`
+	Path        string `validate:"required,file,printascii"`
+	Version     string `yaml:"version" validate:"required,printascii"`
+	Description string `yaml:"description" validate:"required,printascii,min=15"`
 }

@@ -6,13 +6,9 @@ const (
 )
 
 type S_ConfigProducts struct {
-	// Obrigatórios
-	Path string `yaml:"path"`
-	// Opcionais
+	Path string `yaml:"path" validate:"required,dir,printascii"`
 }
 
 type S_Config struct {
-	// Obrigatórios
-	// Opcionais
 	Products *S_ConfigProducts `yaml:"_products,omitempty"`
 }

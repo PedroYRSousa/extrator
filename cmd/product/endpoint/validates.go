@@ -1,22 +1,15 @@
 package endpoint
 
-import "fmt"
+import (
+	"github.com/go-playground/validator"
+)
 
 func (endpoint *S_Endpoint) validate() error {
-	if endpoint.Name == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
-	}
+	validate := validator.New()
 
-	if endpoint.Path == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
-	}
-
-	if endpoint.Description == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
-	}
-
-	if endpoint.Version == "" {
-		return fmt.Errorf("TODO, melhorar essa mensagem de erro")
+	err := validate.Struct(*endpoint)
+	if err != nil {
+		return err
 	}
 
 	return nil
