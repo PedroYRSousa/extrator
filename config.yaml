@@ -1,3 +1,5 @@
 #############
 #   GERAL   #
 #############
+_products:
+  path: "../products"

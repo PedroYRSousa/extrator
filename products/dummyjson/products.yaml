@@ -1,8 +1,6 @@
 #############
 #   BASIC   #
 #############
-vendor: dummyjson
-name: products
 version: 0.1.0
 description: Extraindo dados de teste de dummyjson.com
 
