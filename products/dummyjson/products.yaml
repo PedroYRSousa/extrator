@@ -3,3 +3,9 @@
 #############
 version: 0.1.0
 description: Extraindo dados de teste de dummyjson.com
+url: https://dummyjson.com/products
+_method: GET
+# Por hora só json
+_response_format: JSON
+_extraction_json_path: $
+# #################
