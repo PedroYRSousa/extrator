@@ -29,6 +29,16 @@ func (endpoint *S_Endpoint) format() *S_Endpoint {
 		*endpoint.ExtractionJSONPath = DEFAULT_EXTRACTION_JSON_PATH
 	}
 
+	if endpoint.Headers == nil {
+		endpoint.Headers = new(map[string]string)
+		*endpoint.Headers = map[string]string{}
+	}
+
+	if endpoint.QueryParams == nil {
+		endpoint.QueryParams = new(map[string]string)
+		*endpoint.QueryParams = map[string]string{}
+	}
+
 	modules.FormatString(endpoint)
 
 	return endpoint

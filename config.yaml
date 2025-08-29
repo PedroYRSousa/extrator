@@ -3,3 +3,6 @@
 #############
 _products:
   path: "../products"
+  _product_async_count: 3
+  _endpoint_per_product_async_count: 10
+  _max_attempts: 10

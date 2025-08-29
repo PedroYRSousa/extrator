@@ -3,7 +3,6 @@ package endpoint
 import (
 	"extrator/config"
 	"extrator/modules"
-	"log"
 	"os"
 )
 
@@ -29,8 +28,6 @@ func Load(conf *config.S_Config, productPath string) ([]S_Endpoint, error) {
 		if err != nil {
 			return nil, err
 		}
-
-		log.Println(endpoint)
 
 		err = endpoint.check()
 		if err != nil {
