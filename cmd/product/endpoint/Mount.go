@@ -38,13 +38,12 @@ func (endpoint *S_Endpoint) Mount(conf *config.S_Config) error {
 	}
 
 	if endpoint.Body != nil {
-		endpoint.Request.Header.Set("content-type", endpoint.Body.ContentType)
-
-		bodyBytes, err := endpoint.Body.Mount(conf)
+		bodyBytes, contentType, err := endpoint.Body.Mount(conf)
 		if err != nil {
 			return err
 		}
 
+		endpoint.Request.Header.Set("content-type", contentType)
 		endpoint.Request.Header.Set("content-length", strconv.Itoa(len(bodyBytes)))
 		endpoint.Request.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 	} else {

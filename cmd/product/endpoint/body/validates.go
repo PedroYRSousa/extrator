@@ -25,5 +25,13 @@ func (body *S_Body) validate() error {
 		}
 	}
 
+	if body.ContentType == "application/x-www-form-urlencoded" && body.FormFields == nil {
+		return fmt.Errorf("invalid endpoint._body._form_fields | must be provided")
+	}
+
+	if body.ContentType == "multipart/form-data" && body.MultiPart == nil {
+		return fmt.Errorf("invalid endpoint._body._multi_part | must be provided")
+	}
+
 	return nil
 }
