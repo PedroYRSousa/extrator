@@ -15,7 +15,8 @@ func (endpoint *S_Endpoint) Start(conf *config.S_Config) error {
 
 	dump, err := httputil.DumpRequest(endpoint.Request, true)
 	fmt.Println("====================")
-	fmt.Println(string(dump), err)
+	fmt.Println(string(dump))
+	fmt.Println(err)
 	fmt.Println("====================")
 
 	client := http.DefaultClient

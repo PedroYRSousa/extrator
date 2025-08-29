@@ -15,7 +15,9 @@ func (p *S_ProductEndpoint) Start() error {
 	}
 
 	data, _ := httputil.DumpRequest(request, true)
+	fmt.Println("=============")
 	fmt.Println(string(data))
+	fmt.Println("a=============")
 
 	return nil
 }

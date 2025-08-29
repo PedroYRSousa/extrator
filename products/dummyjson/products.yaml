@@ -19,8 +19,8 @@ _headers:
 # BODY #################
 _body:
   content_type: application/json # application/x-www-form-urlencoded | multipart/form-data | application/json | application/xml | application/graphql | application/protobuf | application/msgpack | application/cbor | application/x-ndjson | text/plain | text/csv | application/octet-stream
-  _file: "env(HOME)"
-  # _content: "conteudo do body em string"
+  # _file: "env(HOME)"
+  _content: "{\"a\":\"b\"}"
   # _form_fields:
   #   username: "pedro"
   #   password: "123456"
