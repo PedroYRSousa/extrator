@@ -9,10 +9,10 @@ _method: GET
 _response_format: JSON # JSON | CSV | XML | ZIP/JSON | ZIP/CSV | ZIP/XML
 # OPÇÕES #################
 _query_params:
-  key1: env(HOME)
+  key1: env(HOME)abc
   key2: value2
 _headers:
-  header1: env(HOME)
+  header1: env(HOME)def
   header2: value2
 # BODY #################
 # _body:
@@ -35,13 +35,13 @@ _headers:
   #       - "go.mod"
 # PAGINATE #################
 _paginate:
-  mode: none | page | property | link_header
+  mode: page
   _page:
-    _direction: next | previous
-    _location: header | body | query_param
-    page:
-    page_size:
+    _direction: next
+    _location: header
+    page: $.page
+    page_size: $.page
   _property:
-    property:
+    property: $.page
   _link_header:
-    header:
+    header: $.page

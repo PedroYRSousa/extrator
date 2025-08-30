@@ -22,7 +22,7 @@ var (
 type S_Paginate struct {
 	Mode string `yaml:"mode,omitempty" validate:"required,printascii"`
 
-	Page       *page.S_PaginatePage              `yaml:"_page,omitempty" validate:"required_if Mode page"`
-	Property   *property.S_PaginateProperty      `yaml:"_property,omitempty" validate:"required_if Mode property"`
-	LinkHeader *link_header.S_PaginateLinkHeader `yaml:"_link_header,omitempty" validate:"required_if Mode link_header"`
+	Page       *page.S_PaginatePage              `yaml:"_page,omitempty" validate:"required_if=Mode page"`
+	Property   *property.S_PaginateProperty      `yaml:"_property,omitempty" validate:"required_if=Mode property"`
+	LinkHeader *link_header.S_PaginateLinkHeader `yaml:"_link_header,omitempty" validate:"required_if=Mode link_header"`
 }
