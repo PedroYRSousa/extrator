@@ -36,14 +36,14 @@ func transformString(field reflect.Value) error {
 						return err
 					}
 
-					field.SetString(value)
+					field.SetMapIndex(key, reflect.ValueOf(value))
 				} else if IsSecret(v) {
 					value, err := secret.Get(v)
 					if err != nil {
 						return err
 					}
 
-					field.SetString(value)
+					field.SetMapIndex(key, reflect.ValueOf(value))
 				}
 			}
 		}
