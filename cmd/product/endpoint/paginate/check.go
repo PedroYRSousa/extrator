@@ -7,7 +7,22 @@ func (paginate *S_Paginate) Check() error {
 
 	paginate = paginate.format()
 
-	err := paginate.validate()
+	err := paginate.Page.Check()
+	if err != nil {
+		return err
+	}
+
+	err = paginate.Property.Check()
+	if err != nil {
+		return err
+	}
+
+	err = paginate.LinkHeader.Check()
+	if err != nil {
+		return err
+	}
+
+	err = paginate.validate()
 	if err != nil {
 		return err
 	}
