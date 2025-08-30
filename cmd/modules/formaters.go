@@ -26,6 +26,15 @@ func formatString(field reflect.Value) {
 		if !field.IsNil() {
 			formatString(field.Elem())
 		}
+	} else if field.Kind() == reflect.Slice {
+		for i := 0; i < field.Len(); i++ {
+			elem := field.Index(i)
+			if elem.Kind() == reflect.Pointer && !elem.IsNil() {
+				formatString(elem.Elem())
+			} else {
+				formatString(elem)
+			}
+		}
 	}
 }
 

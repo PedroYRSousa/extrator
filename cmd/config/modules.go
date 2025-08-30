@@ -8,7 +8,7 @@ import (
 
 func (config *S_Config) format() {
 	if config == nil {
-		panic("TODO, melhorar | ERROR check config")
+		panic("TODO, melhorar | ERROR cheformatck config")
 	}
 
 	modules.FormatString(config)
@@ -16,7 +16,7 @@ func (config *S_Config) format() {
 
 func (config *S_Config) transform() error {
 	if config == nil {
-		panic("TODO, melhorar | ERROR check config")
+		panic("TODO, melhorar | ERROR transform config")
 	}
 
 	err := modules.TransformString(config)
@@ -29,7 +29,7 @@ func (config *S_Config) transform() error {
 
 func (config *S_Config) validate() error {
 	if config == nil {
-		panic("TODO, melhorar | ERROR check config")
+		panic("TODO, melhorar | ERROR validate config")
 	}
 
 	err := validator.New().Struct(config)

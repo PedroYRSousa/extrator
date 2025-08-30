@@ -2,6 +2,7 @@ package main
 
 import (
 	"extrator/config"
+	"extrator/product"
 	"log"
 )
 
@@ -14,10 +15,11 @@ func main() {
 	log.Printf("%+v", *conf)
 	log.Printf("%+v", conf.Products)
 
-	// products, err := product.Load(conf)
-	// if err != nil {
-	// 	log.Fatalf("ERROR | Load products | %+v", err)
-	// }
+	products, err := product.Load(*conf)
+	if err != nil {
+		log.Fatalf("ERROR | Load products | %+v", err)
+	}
+	log.Printf("%+v", products)
 
 	// for _, product := range products {
 	// 	err := product.Mount(conf)

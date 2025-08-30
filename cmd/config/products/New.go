@@ -1,6 +1,6 @@
 package config_products
 
-func NewConfigProducts() S_ConfigProducts {
+func New() S_ConfigProducts {
 	return S_ConfigProducts{
 		Path:                         DEFAULT_PRODUCTS_PATH,
 		ProductAsyncCount:            DEFAULT_PRODUCT_ASYNC_COUNT,
