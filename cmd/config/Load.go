@@ -5,7 +5,7 @@ import (
 )
 
 func Load() (*S_Config, error) {
-	var conf S_Config
+	var conf S_Config = newConfig()
 	err := modules.YamlToStruct(DEFAULT_CONFIG_PATH, &conf)
 	if err != nil {
 		return nil, err

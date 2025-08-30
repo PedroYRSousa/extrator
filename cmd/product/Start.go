@@ -8,11 +8,11 @@ import (
 )
 
 func (product *S_Product) Start(conf *config.S_Config) error {
-	endpointsAsyncCount := modules.AsyncLimiter(int(*conf.Products.EndpointPerProductAsyncCount))
+	endpointsAsyncCount := modules.AsyncLimiter(int(conf.Products.EndpointPerProductAsyncCount))
 	for _, endpoint := range product.Endpoints {
 		_endpoint := endpoint
 		endpointsAsyncCount.Go(func() {
-			err := modules.ExecWithAttempts(*conf.Products.MaxAttempts, *conf.Products.DelayAttemptsInSeconds, func() error {
+			err := modules.ExecWithAttempts(conf.Products.MaxAttempts, conf.Products.DelayAttemptsInSeconds, func() error {
 				err := _endpoint.Start(conf)
 				if err != nil {
 					return fmt.Errorf("ERROR | Start product (%s) | %+v", _endpoint.Name, err)
