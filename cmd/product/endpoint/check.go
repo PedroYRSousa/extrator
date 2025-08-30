@@ -18,5 +18,10 @@ func (endpoint *S_Endpoint) check() error {
 		return err
 	}
 
+	err = endpoint.Paginate.Check()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

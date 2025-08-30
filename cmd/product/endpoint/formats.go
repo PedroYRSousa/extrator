@@ -24,11 +24,6 @@ func (endpoint *S_Endpoint) format() *S_Endpoint {
 		*endpoint.ResponseFormat = strings.ToLower(*endpoint.ResponseFormat)
 	}
 
-	if endpoint.ExtractionJSONPath == nil {
-		endpoint.ExtractionJSONPath = new(string)
-		*endpoint.ExtractionJSONPath = DEFAULT_EXTRACTION_JSON_PATH
-	}
-
 	if endpoint.Headers == nil {
 		endpoint.Headers = new(map[string]string)
 		*endpoint.Headers = map[string]string{}

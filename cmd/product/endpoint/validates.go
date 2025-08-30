@@ -5,7 +5,6 @@ import (
 	"slices"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/theory/jsonpath"
 )
 
 func (endpoint *S_Endpoint) validate() error {
@@ -22,11 +21,6 @@ func (endpoint *S_Endpoint) validate() error {
 
 	if !slices.Contains(RESPONSE_FORMAT_ALLOWED, *endpoint.ResponseFormat) {
 		return fmt.Errorf("invalid endpoint._response_format %q | available options: %v", *endpoint.ResponseFormat, RESPONSE_FORMAT_ALLOWED)
-	}
-
-	_, err = jsonpath.Parse(*endpoint.ExtractionJSONPath)
-	if err != nil {
-		return err
 	}
 
 	return nil

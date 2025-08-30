@@ -6,13 +6,14 @@ import (
 	"strings"
 )
 
-func Get(envName string) (string, error) {
-	envName = strings.ReplaceAll(strings.ReplaceAll(envName, "env(", ""), ")", "")
+func Get(target string) (string, error) {
+	_, after, _ := strings.Cut(target, "env(")
+	key, _, _ := strings.Cut(after, ")")
 
-	env, founded := os.LookupEnv(envName)
+	env, founded := os.LookupEnv(key)
 	if !founded {
-		return "", fmt.Errorf("environment %s not found", envName)
+		return "", fmt.Errorf("environment %s not found", key)
 	}
 
-	return env, nil
+	return strings.ReplaceAll(target, fmt.Sprintf(ENV, key), env), nil
 }

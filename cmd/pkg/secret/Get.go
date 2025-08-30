@@ -1,4 +1,4 @@
-package aws
+package secret
 
 import (
 	"strings"
@@ -9,5 +9,5 @@ func Get(envName string) (string, error) {
 
 	panic("TODO, não implementado")
 
-	return envName, nil
+	return "", nil
 }

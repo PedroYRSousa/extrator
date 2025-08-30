@@ -6,9 +6,7 @@ description: Extraindo dados de teste de dummyjson.com
 url: https://dummyjson.com/products
 _method: GET
 # RESPONSE #################
-# Por hora só json
-_response_format: JSON
-_extraction_json_path: $
+_response_format: JSON # JSON | CSV | XML | ZIP/JSON | ZIP/CSV | ZIP/XML
 # OPÇÕES #################
 _query_params:
   key1: env(HOME)
@@ -35,3 +33,15 @@ _headers:
   #       - "go.sum"
   #     file3:
   #       - "go.mod"
+# PAGINATE #################
+_paginate:
+  mode: none | page | property | link_header
+  _page:
+    _direction: next | previous
+    _location: header | body | query_param
+    page:
+    page_size:
+  _property:
+    property:
+  _link_header:
+    header:

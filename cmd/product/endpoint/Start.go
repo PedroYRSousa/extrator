@@ -1,25 +1,33 @@
 package endpoint
 
 import (
+	"encoding/json"
+	"encoding/xml"
 	"extrator/config"
-	"io"
+	"extrator/modules"
 	"log"
-	"net/http"
 )
 
 func (endpoint *S_Endpoint) Start(conf *config.S_Config) error {
-	client := http.DefaultClient
-	res, err := client.Do(endpoint.Request)
+	res, body, err := modules.MakeRequest(endpoint.Request)
 	if err != nil {
 		return err
 	}
-	defer res.Body.Close()
+	log.Println(res)
+	log.Println("============")
 
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		return err
+	var bodyData interface{}
+	if *endpoint.ResponseFormat == RESPONSE_FORMAT_JSON {
+		err = json.Unmarshal(body, &bodyData)
+		if err != nil {
+			return err
+		}
+	} else if *endpoint.ResponseFormat == RESPONSE_FORMAT_XML {
+		err = xml.Unmarshal(body, &bodyData)
+		if err != nil {
+			return err
+		}
 	}
-	log.Println(string(body))
 
 	return nil
 }

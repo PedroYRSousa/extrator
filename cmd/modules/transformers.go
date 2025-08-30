@@ -1,8 +1,8 @@
 package modules
 
 import (
-	"extrator/pkg/aws"
 	"extrator/pkg/env"
+	"extrator/pkg/secret"
 	"reflect"
 )
 
@@ -16,7 +16,7 @@ func transformString(field reflect.Value) error {
 
 			field.SetString(value)
 		} else if IsSecret(field.String()) {
-			value, err := aws.Get(field.String())
+			value, err := secret.Get(field.String())
 			if err != nil {
 				return err
 			}
@@ -35,13 +35,15 @@ func transformString(field reflect.Value) error {
 					if err != nil {
 						return err
 					}
-					field.SetMapIndex(key, reflect.ValueOf(value))
+
+					field.SetString(value)
 				} else if IsSecret(v) {
-					value, err := aws.Get(v)
+					value, err := secret.Get(v)
 					if err != nil {
 						return err
 					}
-					field.SetMapIndex(key, reflect.ValueOf(value))
+
+					field.SetString(value)
 				}
 			}
 		}
