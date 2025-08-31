@@ -4,37 +4,38 @@
 version: "      0.1.0"
 description: env(HOME)
 endpoint_config:
+  # BASIC         #################
   url: https://dummyjson.com/products
-  # _method: GET
-  # # RESPONSE #################
-  # _response_format: JSON # JSON | CSV | XML | ZIP/JSON | ZIP/CSV | ZIP/XML
-  # # OPÇÕES #################
-  # _query_params:
-  #   key1: env(HOME)
-  #   key2: value2
-  # _headers:
-  #   header1: env(HOME)
-  #   header2: value2
-  # # BODY #################
-  # # _body:
-  #   # content_type: multipart/form-data # application/x-www-form-urlencoded | multipart/form-data | application/json | application/xml | application/graphql | application/protobuf | application/msgpack | application/cbor | application/x-ndjson | text/plain | text/csv | application/octet-stream
-  #   # _file: "env(HOME)"
-  #   # _content: "{\"a\":\"b\"}"
-  #   # _form_fields:
-  #   #   username: "pedro"
-  #   #   password: "123456"
-  #   #   remember: "true"
-  #   # _multi_part:
-  #   #   fields:
-  #   #     name1: value1
-  #   #     name2: value2
-  #   #   files:
-  #   #     file1e2:
-  #   #       - "main.go"
-  #   #       - "go.sum"
-  #   #     file3:
-  #   #       - "go.mod"
-  # # PAGINATE #################
+  _method: GET
+  # RESPONSE      #################
+  _response_format: json # JSON | CSV | XML | ZIP/JSON | ZIP/CSV | ZIP/XML
+  # OPÇÕES        #################
+  _query_params:
+    key1: env(HOME)
+    key2: value2
+  _headers:
+    header1: env(HOME)
+    header2: value2
+  # BODY          #################
+  _body:
+    content_type: application/x-www-form-urlencoded # application/x-www-form-urlencoded | multipart/form-data | application/json | application/xml | application/graphql | application/protobuf | application/msgpack | application/cbor | application/x-ndjson | text/plain | text/csv | application/octet-stream
+    # _file: "main.go"
+    # _content: "{\"a\":\"b\"}"
+    # _form_fields:
+    #   username: "pedro"
+    #   password: "123456"
+    #   remember: "true"
+    # _multi_part:
+    #   fields:
+    #     name1: value1
+    #     name2: value2
+    #   files:
+    #     file1e2:
+    #       - "main.go"
+    #       - "go.sum"
+    #     file3:
+    #       - "go.mod"
+  # # PAGINATE    #################
   # _paginate:
   #   mode: page
   #   _page:

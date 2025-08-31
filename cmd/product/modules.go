@@ -32,9 +32,18 @@ func (product *S_Product) validate() error {
 		panic("TODO, melhorar | ERROR validate product")
 	}
 
-	err := validator.New().Struct(product)
+	validator := validator.New()
+
+	err := validator.Struct(product)
 	if err != nil {
 		return err
+	}
+
+	for _, endpoint := range product.Endpoints {
+		err := validator.Struct(endpoint)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
