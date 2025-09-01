@@ -5,7 +5,7 @@ import (
 )
 
 func Load() (*S_Config, error) {
-	var conf S_Config = New()
+	var conf *S_Config = New()
 	err := modules.YamlToStruct(DEFAULT_CONFIG_PATH, &conf)
 	if err != nil {
 		return nil, err
@@ -16,5 +16,5 @@ func Load() (*S_Config, error) {
 		return nil, err
 	}
 
-	return &conf, nil
+	return conf, nil
 }

@@ -7,5 +7,5 @@ const (
 )
 
 type S_Config struct {
-	Products config_products.S_ConfigProducts `yaml:"_products,omitempty"`
+	Products *config_products.S_ConfigProducts `yaml:"_products,omitempty"`
 }
