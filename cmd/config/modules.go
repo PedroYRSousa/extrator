@@ -9,7 +9,7 @@ import (
 
 func (config *S_Config) validate() error {
 	if config == nil {
-		panic("TODO, melhorar | ERROR validate config")
+		panic("ERROR Interno, verificar config.validate")
 	}
 
 	err := validator.New().Struct(config)
@@ -27,7 +27,7 @@ func (config *S_Config) validate() error {
 
 func (config *S_Config) check() error {
 	if config == nil {
-		panic("TODO, melhorar | ERROR check config")
+		panic("ERROR Interno, verificar config.validate")
 	}
 
 	err := struct_inspector.Start(config)
