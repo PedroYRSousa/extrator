@@ -61,11 +61,6 @@ func Load(conf config.S_Config) ([]S_Product, error) {
 			return nil, err
 		}
 
-		err = product.check()
-		if err != nil {
-			return nil, err
-		}
-
 		products = append(products, product)
 	}
 

@@ -18,5 +18,5 @@ func MakeRequest(request *http.Request) (*http.Response, []byte, error) {
 		return nil, nil, err
 	}
 
-	return res, body, err
+	return res, body, nil
 }
