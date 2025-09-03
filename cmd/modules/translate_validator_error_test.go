@@ -67,7 +67,7 @@ func TestTranslateValidatorError_DirPath(t *testing.T) {
 	}
 
 	msg := trErr.Error()
-	if !strings.Contains(msg, "validation Error on field (sampleFilePath.Dir)") {
+	if !strings.Contains(msg, "validation Error on field (sampleDirPath.Dir)") {
 		t.Fatalf("unexpected message: %v", msg)
 	}
 	if !strings.Contains(msg, "The field must be a valid directory path") {
