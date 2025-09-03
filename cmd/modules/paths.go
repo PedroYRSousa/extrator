@@ -50,10 +50,9 @@ func JoinPaths(segments ...string) string {
 				continue
 			}
 			if c == ".." {
-				if len(parts) > 0 {
+				if len(parts) > 0 && parts[len(parts)-1] != ".." {
 					parts = parts[:len(parts)-1]
 				} else if !absolute {
-					// Em relativo, preserva .. no início
 					parts = append(parts, "..")
 				}
 				continue
