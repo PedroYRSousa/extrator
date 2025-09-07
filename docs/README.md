@@ -1,0 +1,1 @@
+docs/: Project documentation, such as design documents or API documentation.
