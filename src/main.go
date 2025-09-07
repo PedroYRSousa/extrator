@@ -1,7 +1,7 @@
 package main
 
 import (
-	"extrator/configs"
+	"extrator/internal/configs"
 	"log"
 )
 
