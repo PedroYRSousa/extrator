@@ -2,7 +2,7 @@ package configs
 
 import (
 	"errors"
-	"extrator/internal/validator"
+	"extrator/pkg/validator"
 	"os"
 
 	"gopkg.in/yaml.v3"

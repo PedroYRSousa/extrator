@@ -4,7 +4,7 @@ import (
 	"errors"
 	"extrator/internal/configs"
 	"extrator/internal/product/endpoint"
-	"extrator/internal/validator"
+	"extrator/pkg/validator"
 	"fmt"
 	"os"
 )

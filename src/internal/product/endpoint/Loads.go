@@ -2,7 +2,7 @@ package endpoint
 
 import (
 	"errors"
-	"extrator/internal/validator"
+	"extrator/pkg/validator"
 	"fmt"
 	"os"
 
