@@ -1,4 +1,4 @@
 ###############
 #   GENERAL   #
 ###############
-path_products: "./configs/products"
+path_products: "../configs/products"

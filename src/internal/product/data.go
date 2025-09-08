@@ -1,12 +1,12 @@
 package product
 
 import (
-	"extrator/internal/product/auth"
 	"extrator/internal/product/endpoint"
 )
 
 type S_Product struct {
-	Name     string
-	Endpoint endpoint.S_Endpoint
-	Auth     *auth.S_Auth
+	Name string `validate:"printascii,gt=0"`
+	Path string `validate:"dirpath,printascii,gt=0"`
+
+	Endpoints []*endpoint.S_Endpoint `validate:"required,gt=0"`
 }

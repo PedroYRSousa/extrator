@@ -2,13 +2,17 @@ package endpointconfig
 
 import (
 	"extrator/internal/product/endpoint/endpointConfig/body"
+	"net/http"
+)
+
+const (
+	DEFAULT_METHOD = http.MethodGet
 )
 
 type S_EndpointConfig struct {
-	URL    string
-	Method *string
-	// ExtractJsonPath *string
-	Headers     *map[string]string
-	QueryParams *map[string]string
-	Body        *body.S_Body
+	URL         string               `yaml:"url" validate:"required,url,printascii"`
+	Method      string               `yaml:"_method" validate:"required,uppercase,oneof=GET POST"`
+	Headers     *[]map[string]string `yaml:"_headers" validate:"required"`
+	QueryParams *[]map[string]string `yaml:"_query_params" validate:"required"`
+	Body        *body.S_Body         `yaml:"_body"`
 }

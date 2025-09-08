@@ -12,10 +12,19 @@ var mappingTag = map[string]string{
 	"printascii": "must contain only printable ASCII characters",
 	"uppercase":  "must be uppercase",
 	"lowercase":  "must be lowercase",
+	// TODO, ajustar
+	"dirPath":              "must be dirPath",
+	"filePath":             "must be filePath",
+	"gt":                   "must be gt",
+	"required_without_all": "must be required_without_all",
+	"required_without":     "must be required_without",
+	"excluded_without_all": "must be excluded_without_all",
+	"excluded_without":     "must be excluded_without",
+	"oneoffield":           "must be oneoffield",
+	"contains":             "must be contains",
+	"oneof":                "must be oneof",
 }
 
-// FormatErrors returns short English messages like:
-// "ABC (yaml: path_products.teste.abc) is required"
 func formatErros(err error, s any) []string {
 	var errs []string
 	if err == nil {

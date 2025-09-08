@@ -1,62 +1,86 @@
-###############
-#   PRODUCT   #
-###############
-product:
-  name: "product 1"
-
 ################
 #   ENDPOINT   #
 ################
-endpoint:
-  name: "endpoint 1"
-  endpoint_config:
-    url: "http://www.google.com"
-    _method: "" # GET | POST
-    # _extract_json_path: "$"
-    _headers:
-      - key1: value1
-      - key2: value2
-      - key3: value3
-    _query_params:
-      - key1: value1
-      - key2: value2
-      - key3: value3
-    _body:
-      _form_url_encoded:
-        - key1: value1
-        - key2: value2
-        - key3: value3
-      _multi_part:
-        _fields:
-          - key1: value1
-          - key2: value2
-          - key3: value3
-        _files:
-          - file1:
-              path1: "path1"
-              path2: "path2"
-          - file2:
-              path1: "path1"
-      _file: ""
-      _text: "value"
+name: "endpoint 1"
+endpoint_config:
+  url: "http://www.google.com"
+  _method: "GET" # GET | POST
+  _headers:
+    - key1: value1
+    - key2: value2
+    - key3: value3
+  _query_params:
+    - key1: value1
+    - key2: value2
+    - key3: value3
+  # _body:
+    # _form_url_encoded:
+    #   - key1: value1
+    #   - key2: value2
+    #   - key3: value3
+    # _multi_part:
+    #   fields:
+    #     - key1: value1
+    #     - key2: value2
+    #     - key3: value3
+    #   files:
+    #     - file1:
+    #         path1: "path1"
+    #         path2: "path2"
+    #     - file2:
+    #         path1: "path1"
+    # _file: ""
+    # _text: "value"
 
-############
-#   AUTH   #
-############
-_auth:
-  _api_key:
-    key: ""
-    value: ""
-    location: "header" # header | query | cookie
-  _basic:
-    username: ""
-    password: ""
-  _digest:
-    username: ""
-    password: ""
-  _bearer:
-    name: ""
-    prefix: ""
-    _token: ""
-    is_dynamic: false # false | true
-    _endpoint_config: # ....
+  ############
+  #   AUTH   #
+  ############
+# _auth:
+  # _api_key:
+  #   key: "asd"
+  #   value: "asd"
+  #   location: "header" # header | query | cookie
+  # _basic:
+  #   username: ""
+  #   password: ""
+  # _digest:
+  #   username: ""
+  #   password: ""
+  # _bearer:
+  #   name: "name"
+  #   prefix: "prefix"
+  #   _token: "_token"
+  #   is_dynamic: false # false | true
+  #   _endpoint_config:
+  #     url: "http://www.google.com"
+  #     _method: "GET" # GET | POST
+  #     _headers:
+  #       - key1: value1
+  #       - key2: value2
+  #       - key3: value3
+  #     _query_params:
+  #       - key1: value1
+  #       - key2: value2
+  #       - key3: value3
+  #     _body:
+  #       # _form_url_encoded:
+  #       #   - key1: value1
+  #       #   - key2: value2
+  #       #   - key3: value3
+  #       # _multi_part:
+  #       #   fields:
+  #       #     - key1: value1
+  #       #     - key2: value2
+  #       #     - key3: value3
+  #       #   files:
+  #       #     - file1:
+  #       #         path1: "path1"
+  #       #         path2: "path2"
+  #       #     - file2:
+  #       #         path1: "path1"
+  #       # _file: ""
+  #       _text: "value"
+   
+##############
+#   TABLES   #
+##############

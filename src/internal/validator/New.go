@@ -5,12 +5,9 @@ import (
 )
 
 func New() *validator.Validate {
-	v := validator.New()
+	v := validator.New(validator.WithRequiredStructEnabled())
 
-	// exemplo de validação customizada
-	_ = v.RegisterValidation("tag-here", func(fl validator.FieldLevel) bool {
-		return fl.Field().String() != "forbidden"
-	})
+	_ = v.RegisterValidation("required_without", requiredWithout, true)
 
 	return v
 }
