@@ -2,6 +2,7 @@ package endpoint
 
 import (
 	"errors"
+	utilsstructs "extrator/pkg/utils_structs"
 	"extrator/pkg/validator"
 	"fmt"
 	"os"
@@ -20,6 +21,10 @@ func (e *S_Endpoint) load() error {
 	}
 
 	if err := yaml.Unmarshal(fileData, e); err != nil {
+		return err
+	}
+
+	if err := utilsstructs.Start(e); err != nil {
 		return err
 	}
 

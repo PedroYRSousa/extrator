@@ -6,8 +6,8 @@ endpoint_config:
   url: "http://www.google.com"
   _method: "GET" # GET | POST
   _headers:
-    - key1: value1
-    - key2: value2
+    - key1: env(HOME)
+    - key2: env(TESTE)
     - key3: value3
   _query_params:
     - key1: value1
