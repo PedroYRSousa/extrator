@@ -21,28 +21,18 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	products1, err := product.Loads(conf)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	products2, err := product.Loads(conf)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	products = append(products, products1...)
-	products = append(products, products2...)
-
 	asyncProducts := async.AsyncLimiter(conf.ProductsParallelExecutionCount)
 
 	for _, product := range products {
 		_product := product
+		_conf := conf
 		utilsstructs.Show(product, 0)
 
-		asyncProducts.Go(func() {
+		asyncProducts.Go(func() { _product.Mount(_conf) })
 
-		})
+		asyncProducts.Wait()
+
+		// asyncProducts.Go(_product.Start)
 	}
 
 	asyncProducts.Wait()

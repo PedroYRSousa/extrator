@@ -13,7 +13,7 @@ endpoint_config:
     - key1: value1
     - key2: value2
     - key3: value3
-  # _body:
+  _body:
     # _form_url_encoded:
     #   - key1: value1
     #   - key2: value2
@@ -24,11 +24,8 @@ endpoint_config:
     #     - key2: value2
     #     - key3: value3
     #   files:
-    #     - file1:
-    #         path1: "path1"
-    #         path2: "path2"
-    #     - file2:
-    #         path1: "path1"
+    #     - file1: "main.go"
+    #     - file2: "go.sum"
     # _file: ""
     # _text: "value"
 
