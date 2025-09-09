@@ -10,6 +10,9 @@ const (
 )
 
 type S_EndpointConfig struct {
+	Request  *http.Request
+	Response *http.Response
+
 	URL         string               `yaml:"url" validate:"required,url,printascii"`
 	Method      string               `yaml:"_method" validate:"required,uppercase,oneof=GET POST"`
 	Headers     *[]map[string]string `yaml:"_headers" validate:"required"`
