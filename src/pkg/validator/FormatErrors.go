@@ -23,6 +23,7 @@ var mappingTag = map[string]string{
 	"oneoffield":           "must be oneoffield",
 	"contains":             "must be contains",
 	"oneof":                "must be oneof",
+	"url":                  "must be url",
 }
 
 func formatErros(err error, s any) []string {

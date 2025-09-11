@@ -28,11 +28,8 @@ func main() {
 		_conf := conf
 		utils_structs.Show(product, 0)
 
-		asyncProducts.Go(func() { _product.Mount(_conf) })
-
-		asyncProducts.Wait()
-
-		// asyncProducts.Go(_product.Start)
+		_product.Mount(_conf)
+		asyncProducts.Go(func() { _product.Execute(_conf) })
 	}
 
 	asyncProducts.Wait()
