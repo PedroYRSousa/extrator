@@ -1,13 +1,13 @@
 package endpoint
 
-import endpointconfig "extrator/internal/product/endpoint/endpointConfig"
+import "extrator/internal/product/endpoint/endpoint_config"
 
 func New(nameFile string, pathFile string) *S_Endpoint {
 	return &S_Endpoint{
 		ToAbort:        false,
 		Name:           nameFile,
 		Path:           pathFile,
-		EndpointConfig: endpointconfig.New(),
+		EndpointConfig: endpoint_config.New(),
 		Auth:           nil,
 	}
 }

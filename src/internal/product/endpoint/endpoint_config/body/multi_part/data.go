@@ -1,4 +1,4 @@
-package multipart
+package multi_part
 
 type S_Multipart struct {
 	Fields []map[string]string `yaml:"fields"`

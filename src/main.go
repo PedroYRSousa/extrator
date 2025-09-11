@@ -4,7 +4,7 @@ import (
 	"extrator/internal/configs"
 	"extrator/internal/product"
 	"extrator/pkg/async"
-	utilsstructs "extrator/pkg/utils_structs"
+	utils_structs "extrator/pkg/utils_structs"
 	"log"
 )
 
@@ -14,7 +14,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	utilsstructs.Show(conf, 0)
+	utils_structs.Show(conf, 0)
 
 	products, err := product.Loads(conf)
 	if err != nil {
@@ -26,7 +26,7 @@ func main() {
 	for _, product := range products {
 		_product := product
 		_conf := conf
-		utilsstructs.Show(product, 0)
+		utils_structs.Show(product, 0)
 
 		asyncProducts.Go(func() { _product.Mount(_conf) })
 

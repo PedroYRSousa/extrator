@@ -1,9 +1,7 @@
-package endpointconfig
+package endpoint_config
 
 import (
-	"fmt"
 	"net/http"
-	"net/http/httputil"
 )
 
 func (ec *S_EndpointConfig) Mount() error {
@@ -44,16 +42,14 @@ func (ec *S_EndpointConfig) Mount() error {
 		}
 	}
 
-	ec.Request = request
-
-	dumpRequest, err := httputil.DumpRequest(ec.Request, true)
-	if err != nil {
-		panic(err)
+	if ec.Client != nil {
+		err = ec.Client.Mount()
+		if err != nil {
+			return err
+		}
 	}
-	fmt.Println()
-	fmt.Println()
-	fmt.Println(string(dumpRequest))
-	fmt.Println()
+
+	ec.Request = request
 
 	return nil
 }

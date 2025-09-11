@@ -2,7 +2,7 @@ package endpoint
 
 import (
 	"errors"
-	utilsstructs "extrator/pkg/utils_structs"
+	utils_structs "extrator/pkg/utils_structs"
 	"extrator/pkg/validator"
 	"fmt"
 	"os"
@@ -24,7 +24,7 @@ func (e *S_Endpoint) load() error {
 		return err
 	}
 
-	if err := utilsstructs.Start(e); err != nil {
+	if err := utils_structs.Start(e); err != nil {
 		return err
 	}
 

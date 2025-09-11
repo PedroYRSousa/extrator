@@ -4,7 +4,7 @@ import (
 	"errors"
 	"extrator/internal/configs"
 	"extrator/internal/product/endpoint"
-	utilsstructs "extrator/pkg/utils_structs"
+	utils_structs "extrator/pkg/utils_structs"
 	"extrator/pkg/validator"
 	"fmt"
 	"os"
@@ -22,7 +22,7 @@ func (p *S_Product) load() error {
 
 	p.Endpoints = endpoints
 
-	if err := utilsstructs.Start(p); err != nil {
+	if err := utils_structs.Start(p); err != nil {
 		return err
 	}
 

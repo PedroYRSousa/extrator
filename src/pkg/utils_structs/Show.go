@@ -1,4 +1,4 @@
-package utilsstructs
+package utils_structs
 
 import (
 	"fmt"

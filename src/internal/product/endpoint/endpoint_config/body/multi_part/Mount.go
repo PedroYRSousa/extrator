@@ -1,4 +1,4 @@
-package multipart
+package multi_part
 
 import (
 	"bytes"

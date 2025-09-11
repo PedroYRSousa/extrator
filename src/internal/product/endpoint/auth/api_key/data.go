@@ -1,4 +1,4 @@
-package apikey
+package api_key
 
 type S_ApiKey struct {
 	Key      string `yaml:"key" validate:"required"`

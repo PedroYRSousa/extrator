@@ -13,6 +13,9 @@ endpoint_config:
     - key1: value1
     - key2: value2
     - key3: value3
+  body_response:
+    extraction_response: $
+    format_response: json
   _body:
     # _form_url_encoded:
     #   - key1: value1
@@ -28,56 +31,64 @@ endpoint_config:
     #     - file2: "go.sum"
     # _file: ""
     # _text: "value"
-
+  _client:
+    _proxyUrl: ""
+    _timeout_in_seconds: 0
+    _timeout_dial_in_seconds: 0
+    _keep_alive_dial_in_seconds: 0
+    _skip_certificate: false
+    _timeout_tls_handshake_in_seconds: 0
+    _timeout_expect_continue_in_seconds: 0
+    _max_idle_conns: 0
+    _max_idle_conns_per_host: 0
+    _timeout_idle_conn_in_seconds: 0
+    _timeout_response_header_in_seconds: 0
   ############
   #   AUTH   #
   ############
 # _auth:
-  # _api_key:
-  #   key: "asd"
-  #   value: "asd"
-  #   location: "header" # header | query | cookie
-  # _basic:
-  #   username: ""
-  #   password: ""
-  # _digest:
-  #   username: ""
-  #   password: ""
-  # _bearer:
-  #   name: "name"
-  #   prefix: "prefix"
-  #   _token: "_token"
-  #   is_dynamic: false # false | true
-  #   _endpoint_config:
-  #     url: "http://www.google.com"
-  #     _method: "GET" # GET | POST
-  #     _headers:
-  #       - key1: value1
-  #       - key2: value2
-  #       - key3: value3
-  #     _query_params:
-  #       - key1: value1
-  #       - key2: value2
-  #       - key3: value3
-  #     _body:
-  #       # _form_url_encoded:
-  #       #   - key1: value1
-  #       #   - key2: value2
-  #       #   - key3: value3
-  #       # _multi_part:
-  #       #   fields:
-  #       #     - key1: value1
-  #       #     - key2: value2
-  #       #     - key3: value3
-  #       #   files:
-  #       #     - file1:
-  #       #         path1: "path1"
-  #       #         path2: "path2"
-  #       #     - file2:
-  #       #         path1: "path1"
-  #       # _file: ""
-  #       _text: "value"
-   
+# _api_key:
+#   key: "asd"
+#   value: "asd"
+#   location: "header" # header | query | cookie
+# _basic:
+#   username: ""
+#   password: ""
+# _bearer:
+#   name: "name"
+#   prefix: "prefix"
+#   _token: "_token"
+#   is_dynamic: false # false | true
+#   _endpoint_config:
+#     url: "http://www.google.com"
+#     _method: "GET" # GET | POST
+#     _headers:
+#       - key1: value1
+#       - key2: value2
+#       - key3: value3
+#     _query_params:
+#       - key1: value1
+#       - key2: value2
+#       - key3: value3
+#     _body:
+#       # _form_url_encoded:
+#       #   - key1: value1
+#       #   - key2: value2
+#       #   - key3: value3
+#       # _multi_part:
+#       #   fields:
+#       #     - key1: value1
+#       #     - key2: value2
+#       #     - key3: value3
+#       #   files:
+#       #     - file1:
+#       #         path1: "path1"
+#       #         path2: "path2"
+#       #     - file2:
+#       #         path1: "path1"
+#       # _file: ""
+#       _text: "value"
+
 ##############
 #   TABLES   #
 ##############
