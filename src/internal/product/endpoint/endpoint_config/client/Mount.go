@@ -13,7 +13,7 @@ func (c *S_Client) Mount() error {
 		panic("Internal error | client.Mount")
 	}
 
-	c.HttpClient = http.DefaultClient
+	c.HttpClient = &http.Client{}
 	c.HttpClient.Timeout = time.Duration(c.TimeoutInSeconds) * time.Second // timeout total da requisição (DNS + conexão + resposta)
 
 	transport := &http.Transport{}
